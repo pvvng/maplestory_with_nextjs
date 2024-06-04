@@ -6,7 +6,9 @@ export default async function AlbumPage(props :any){
     // params 한글로 디코딩
     let decodedParams = decodeURIComponent(props.params.album);
     // 공백 제거
-    decodedParams = decodedParams.replaceAll(" ", "");
+    // let removeSpaceParams = decodedParams.replaceAll(" ", "");
+    // 공백 제거 시 aws 파일 명에 공백이 있으면 불러오지 못하는 문제가 있음
+    // 해결 방안 모색 희망
 
     // DB에 앨범명 쫙 저장해놓고, 불러와서 비교하기. 
     // 유사어가 있으면 그걸로 음원 검색하기

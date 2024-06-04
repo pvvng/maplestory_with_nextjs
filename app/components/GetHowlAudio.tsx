@@ -67,12 +67,11 @@ export function GetHowlAudio (audio :any){
     }, [volume]);
 
     useEffect(()=>{
-        let timer = setTimeout(()=>{
+        let timer = setInterval(()=>{
             if(isPlaying){
                 // 1초마다 남은 음원 길이 감소
-                setDuration(duration - 1);
+                setDuration(pre => pre - 1);
                 // 남은 음원 길이가 0 이하일때
-                console.log(duration)
                 if (parseInt(duration.toFixed(0)) === 1){
                     console.log('end')
                     clearTimeout(timer);
@@ -81,8 +80,8 @@ export function GetHowlAudio (audio :any){
                 }
             }
         },1000)
-        return () => clearTimeout(timer);
-    },[duration])
+        return () => clearInterval(timer);
+    },[isPlaying])
 
     return(
         <div>
@@ -102,9 +101,10 @@ export function GetHowlAudio (audio :any){
                 <input type='range' readOnly/>
             </div> */}
             {
-                duration === 0?
-                <p>로딩중임여</p>:
-                <p>남은 오디오 길이 : {duration.toFixed(0)}</p>
+                duration > 0?
+                <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
+                <p>로딩중임여</p>
+                
             }
         </div>
     )
