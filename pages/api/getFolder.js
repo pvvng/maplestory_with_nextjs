@@ -1,0 +1,31 @@
+import aws from 'aws-sdk';
+
+export default async function handler(req, res) {
+
+    // AWS 구성을 설정합니다.
+    aws.config.update({
+        accessKeyId: process.env.ACCESS_KEY,
+        secretAccessKey: process.env.SECRET_KEY,
+        region: 'ap-northeast-2', 
+        signatureVersion: 'v4',
+    });
+
+    // S3 객체를 생성합니다.
+    const s3 = new aws.S3();
+
+    // 다운로드할 파일의 버킷 이름과 키를 지정합니다.
+    const params = {
+        Bucket: process.env.BUCKET_NAME,
+        Prefix: req.query.folder + '/' // 예: 'audio/song.mp3'
+    };
+
+    try {
+        // 폴더 내의 객체 목록을 가져옵니다.
+        const data = await s3.listObjectsV2(params).promise();
+        // 객체 목록을 클라이언트에 반환합니다.
+        res.status(200).json(data.Contents);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: '폴더를 가져오는 동안 오류가 발생했습니다.' });
+    }
+};

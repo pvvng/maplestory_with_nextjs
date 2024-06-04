@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/mongodb": "^4.0.7",
     "aws-sdk": "^2.1632.0",
     "axios": "^1.7.2",
     "cookie": "^0.6.0",
+    "howler": "^2.2.4",
+    "mongodb": "^6.7.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
+    "@types/howler": "^2.2.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
