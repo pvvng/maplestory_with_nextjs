@@ -1,11 +1,20 @@
 import aws from 'aws-sdk';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+export default async function handler(req :NextApiRequest, res :NextApiResponse) {
+
+    const accessKey = process.env.ACCESS_KEY;
+    const secretKey  = process.env.SECRET_KEY;
+    const bucketName = process.env.BUCKET_NAME;
+
+    if (accessKey === undefined || secretKey  === undefined || bucketName  === undefined){
+        throw new Error('키 에러 발생');
+    }
 
     // AWS 구성을 설정합니다.
     aws.config.update({
-        accessKeyId: process.env.ACCESS_KEY,
-        secretAccessKey: process.env.SECRET_KEY,
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey,
         region: 'ap-northeast-2', 
         signatureVersion: 'v4',
     });
@@ -15,7 +24,7 @@ export default async function handler(req, res) {
 
     // 다운로드할 파일의 버킷 이름과 키를 지정합니다.
     const params = {
-        Bucket: process.env.BUCKET_NAME,
+        Bucket: bucketName,
         Prefix: req.query.folder + '/' // 예: 'audio/song.mp3'
     };
 

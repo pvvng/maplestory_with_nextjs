@@ -1,11 +1,32 @@
 import aws from 'aws-sdk';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req, res) {
+interface BucketType {
+    Bucket : string,
+    Key : string
+}
+
+export default async function handler(req :NextApiRequest, res :NextApiResponse) {
+
+    const accessKey = process.env.ACCESS_KEY;
+    const secretKey  = process.env.SECRET_KEY;
+    const bucketName = process.env.BUCKET_NAME;
+
+    if (accessKey === undefined || secretKey  === undefined || bucketName  === undefined){
+        throw new Error('키 에러 발생');
+    }
 
     // AWS 구성을 설정합니다.
+    let query = req.query.audio;
+
+    // 쿼리의 타입이 string이 아니면 에러 처리
+    if(typeof query !== 'string' ){
+        throw new Error('키 에러 발생');
+    }
+
     aws.config.update({
-        accessKeyId: process.env.ACCESS_KEY,
-        secretAccessKey: process.env.SECRET_KEY,
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey,
         region: 'ap-northeast-2', 
         signatureVersion: 'v4',
     });
@@ -14,14 +35,14 @@ export default async function handler(req, res) {
     const s3 = new aws.S3();
 
     // 다운로드할 파일의 버킷 이름과 키를 지정합니다.
-    const params = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: req.query.audio // 예: 'audio/song.mp3'
+    const params :BucketType = {
+        Bucket: bucketName,
+        Key: query  // 예: 'audio/song.mp3'
     };
 
     try {
         // 파일의 메타데이터 가져오기
-        const headParams = {
+        const headParams :BucketType = {
             Bucket: params.Bucket,
             Key: params.Key
         };

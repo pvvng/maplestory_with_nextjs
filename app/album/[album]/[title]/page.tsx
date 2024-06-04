@@ -18,11 +18,12 @@ export default function Songs(props: any) {
 
   // 제목에 .mp3 떼기
   const title = decodedParams.title.substring(0, decodedParams.title.lastIndexOf("."));
+  let fetchQuery :string = decodedParams.album + '/' + decodedParams.title
 
   // aws에서 음원 데이터 받아오기
   const { data:audio, isLoading, isError } = useQuery(
     ['audio', decodedParams.album, decodedParams.title],
-    () => fetchAudio(decodedParams.album + '/' + decodedParams.title)
+    () => fetchAudio(fetchQuery)
   );
 
   // 예외처리
