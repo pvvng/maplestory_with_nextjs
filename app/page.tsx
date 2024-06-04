@@ -1,34 +1,35 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [audioUrl, setAudioUrl] = useState('');
 
-  useEffect(() => {
-    const fetchAudio = async () => {
-      try {
-        const response = await fetch('/api/getAudio');
-        const data = await response.json()
-        setAudioUrl(data.audioUrl)
-      } catch (error) {
-        console.error('오디오를 가져오는 동안 오류가 발생했습니다:', error);
-      }
-    };
+  let router = useRouter();
 
-    fetchAudio();
-  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때 한 번만 실행되도록 함
+  // input 참조
+  const inputRef = useRef<HTMLInputElement>(null);
+  // input value 저장하기
+  const valueRef = useRef<string>('');
 
-  console.log(audioUrl === '')
-  if(audioUrl !== ''){
-    return (
-      <div>
-        <audio controls>
-          <source src={audioUrl} type="audio/mp3" />
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    );
-  }
+  // input vlaue를 valueRef에 저장
+  const saveValue = () => {
+    if (inputRef.current) {
+      valueRef.current = inputRef.current.value;
+    }
+  };
 
+  return (
+    <div>
+      <input ref={inputRef} type="text" placeholder="앨범 검색" />
+      <button onClick={()=> {
+        saveValue();
+        // 페이지 라우팅
+        router.push('/album/' + valueRef.current);
+      }}>검색</button>
+    </div>
+  );
 }
+
+
+

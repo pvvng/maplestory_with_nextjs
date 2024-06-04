@@ -13,7 +13,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html>
         <head>
-        	<title>My App</title>
+        	<title>메이뿡스토리</title>
         </head>
         <body>
             <QueryClientProvider client={queryClient}>
