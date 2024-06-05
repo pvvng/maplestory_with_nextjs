@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import { fetchFolder } from '../funcions/fetchAWS';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../layout';
-import { setAutoPlayStatus } from '../store';
+import { setAutoPlayStatus, store } from '../store';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -43,8 +43,8 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     // 타이머 상태
     let [isPlaying, setIsPlaying] = useState(false);
     let [storedDuration, setStoredDuration] = useState(0);
-    // 배속 상태
-    let [rate, setRate] = useState(1);
+    // progress bar 넓이
+    let [remainDuration, setRemainDuration] = useState(0);
     // 다음 재생할 음원
     const nextAudioRef = useRef<string>('');
     // useRef로 오토플레이 상태 참조
@@ -105,10 +105,6 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
         }
     },[folder])
 
-    // useEffect(()=>{
-
-    // },[isPlaying, howlAudio])
-
     // 볼륨 조절
     useEffect(() => {
         if(howlAudio){
@@ -147,12 +143,10 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
 
     },[isPlaying])
 
-    // 음원의 남은 길이 설정
+    // 0~100 까지 남은 음원 길이에 비례해서 progress bar의 width 설정
     useEffect(()=>{
-        if(howlAudio){
-            howlAudio.rate(rate);
-        }
-    },[rate])
+        setRemainDuration(100 - ((duration/storedDuration)*100));
+    },[duration])
 
     // 오토플레이 상태 전환 함수
     const handleClick = (status :boolean) => {
@@ -190,20 +184,11 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
                     setVolume(nowVolume/100);
                 }}/>
             </div>
-            <div>
-                <span>배속 조절&nbsp;</span>
-                <select defaultValue={1} onChange={(e)=>{
-                    setRate(parseFloat(e.target.value));
-                }}>
-                    <option>0.5</option>
-                    <option>1</option>
-                    <option>1.5</option>
-                    <option>2</option>
-                </select>
+            
+            {/* progress bar */}
+            <div style={{width:'200px', height:'20px', marginTop:'10px', background:'#eee'}}>
+                <div style={{width: remainDuration + '%', height:'100%', background:'red'}}></div>
             </div>
-            {/* <div>
-                <input type='range' readOnly/>
-            </div> */}
 
             {
                 duration > 0?
