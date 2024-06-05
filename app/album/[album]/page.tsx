@@ -1,32 +1,66 @@
 import { connectDB } from "@/util/database";
 import Album from "../../components/Album";
+import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
 
 export default async function AlbumPage(props :any){
 
     // params 한글로 디코딩
     let decodedParams = decodeURIComponent(props.params.album);
     // 공백 제거
-    // let removeSpaceParams = decodedParams.replaceAll(" ", "");
-    // 공백 제거 시 aws 파일 명에 공백이 있으면 불러오지 못하는 문제가 있음
-    // 해결 방안 모색 희망
+    decodedParams = decodedParams.replaceAll(" ", "");
+
+    // db에서 유사어 발견시 true로 변함
+    let isFound = false;
 
     // DB에 앨범명 쫙 저장해놓고, 불러와서 비교하기. 
     // 유사어가 있으면 그걸로 음원 검색하기
     let db = (await connectDB).db('maple-bgm');
     let res =  await db.collection('album').find().toArray();
-
     let albums = (res[0].album);
-    let isFound = false;
+
 
     albums.map((a :string) => {
 
-        if(a.includes(decodedParams) && a !== decodedParams){
+        console.log(isFound, a)
+
+        // db에 저장된 앨범 명 공백 제거
+        let fixedName = a.replaceAll(" ","")
+
+        // 소문자 m 들어오면 처리
+        if(decodedParams.includes('m')){
+            decodedParams = decodedParams.toUpperCase();
+        }
+
+        // 리프레 들어오면 처리
+        if('리프레'.includes(decodedParams) || decodedParams.includes('리프레')){
+            decodedParams = '미나르 숲';
+            isFound = true;
+        }
+ 
+        if (((fixedName.includes(decodedParams) || decodedParams.includes(fixedName)) && fixedName !== decodedParams) || fixedName === decodedParams) {
             // 유사어거나 같으면 해당 어레이의 앨범명 재할당
-            decodedParams = a
+            decodedParams = a;
             // a와 검색어가 일치하면 isFound 변수에는 변화 x
             isFound = true;
         }
+
+        
+
+
     })
+
+    if(!isFound){
+        // 최후의 수단 : 임계치로 유사어 검색하기
+        decodedParams = (findSimilarWord(decodedParams,albums))
+        isFound = true
+    }
+
+    if (decodedParams === ""){
+         
+        decodedParams = "메이플스토리 M"
+        isFound = false
+    }
+
 
     return(
         <div>
@@ -34,7 +68,8 @@ export default async function AlbumPage(props :any){
                 isFound?
                 <p>이걸 찾으셨나요? &nbsp; 
                     <span style={{textDecorationLine:'underline', color:'blue'}}>{decodedParams}</span>
-                </p> :null
+                </p> :
+                <p>이상한거 찾지 말고 추천 앨범이나 들으십쇼</p>
             }
             <Album decodedParams = {decodedParams}/>
         </div>
