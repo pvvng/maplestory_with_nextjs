@@ -13,8 +13,7 @@ export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
   // input value 저장하기
   const valueRef = useRef<string>('');
-  // 받아온 앨범 명 (오브젝트 형태) 저장하기
-
+  
   // input vlaue를 valueRef에 저장
   const saveValue = () => {
     if (inputRef.current) {
@@ -24,6 +23,14 @@ export default function Home() {
 
   // json 파일에 저장된 앨범 명 받아오기
   const { data: albums, isLoading, isError } = useQuery('albumList', () => fetchAlbums());
+
+  // if(albums !== undefined){
+  //   for (let i = 0; i < 4 ; i++){
+  //     // console.log(albums.album.length)
+  //     let a = Math.floor(Math.random() * (albums.album.length - 1))
+  //     console.log(a)
+  //   }
+  // }
 
   if(isLoading) return <h1>로딩중임 기달</h1>
   if(isError) return <h1>에러남;; 우짜냐</h1>
@@ -44,6 +51,18 @@ export default function Home() {
         }
 
       }}>검색</button>
+      <h2>앨범</h2>
+      {
+        albums !== undefined?
+        albums.album.map((a:string, i:number) => 
+          <p key={i} 
+            onClick={()=>{router.push('/album/' + a)}}
+            style={{cursor :'pointer'}}  
+          >
+            {a}&nbsp;&nbsp;
+          </p>
+        ): null
+      }
     </div>
   );
 }

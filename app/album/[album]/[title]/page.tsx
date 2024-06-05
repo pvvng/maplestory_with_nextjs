@@ -27,16 +27,20 @@ export default function Songs(props: any) {
   );
 
   // 예외처리
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <h2>로딩중뿌잉</h2>;
   if (isError) return <div>Error loading audio</div>;
 
-  return (
-    <div>
-      <h2>Song</h2>
-      <h4>{title}</h4>
-      <h4>{decodedParams.album}</h4>
-      <GetHowlAudio audio = {audio} />
-      <Album decodedParams = {decodedParams.album} title={title} />
-    </div>
-  );
+  if(audio !== undefined){
+
+    return (
+      <div>
+        <h2>Song</h2>
+        <h4>{title}</h4>
+        <h4>{decodedParams.album}</h4>
+        <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} />
+        <Album decodedParams = {decodedParams.album} title={title} />
+      </div>
+    );
+  }
+
 }

@@ -6,11 +6,18 @@ export default async function AlbumPage(props :any){
 
     // params 한글로 디코딩
     let decodedParams = decodeURIComponent(props.params.album);
+    // 최초 params save
+    let storedParams = decodedParams
+
     // 공백 제거
     decodedParams = decodedParams.replaceAll(" ", "");
 
+    console.log(storedParams)
+
     // db에서 유사어 발견시 true로 변함
     let isFound = false;
+    // 검색어가 db에 저장된 값과 완전히 일치하는지 확인하는 변수
+    let urlOk = false;
 
     // DB에 앨범명 쫙 저장해놓고, 불러와서 비교하기. 
     // 유사어가 있으면 그걸로 음원 검색하기
@@ -18,10 +25,12 @@ export default async function AlbumPage(props :any){
     let res =  await db.collection('album').find().toArray();
     let albums = (res[0].album);
 
-
     albums.map((a :string) => {
 
-        console.log(isFound, a)
+        // db에 저장된 값과 최초 url이 완벽하게 일치할 때
+        if (storedParams === a){
+            urlOk = true;
+        }
 
         // db에 저장된 앨범 명 공백 제거
         let fixedName = a.replaceAll(" ","")
@@ -43,28 +52,25 @@ export default async function AlbumPage(props :any){
             // a와 검색어가 일치하면 isFound 변수에는 변화 x
             isFound = true;
         }
-
-        
-
-
     })
 
     if(!isFound){
-        // 최후의 수단 : 임계치로 유사어 검색하기
+        // 임계치로 유사어 검색하기
         decodedParams = (findSimilarWord(decodedParams,albums))
         isFound = true
     }
 
     if (decodedParams === ""){
-         
+        // 유사어를 아예 찾지 못했을 때 (findSimilarWord에서 ''이 반환될 때)
         decodedParams = "메이플스토리 M"
         isFound = false
     }
 
-
     return(
         <div>
             {
+                urlOk?
+                null:
                 isFound?
                 <p>이걸 찾으셨나요? &nbsp; 
                     <span style={{textDecorationLine:'underline', color:'blue'}}>{decodedParams}</span>

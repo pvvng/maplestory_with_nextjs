@@ -1,11 +1,42 @@
 import { Howl } from 'howler';
-import { useEffect, useState } from 'react';
+import {  useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useQuery } from 'react-query';
+import { fetchFolder } from '../funcions/fetchAWS';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../layout';
+import { setAutoPlayStatus } from '../store';
 
+interface AudioMetadata {
+    AcceptRanges: string;
+    ContentLength: number;
+    ContentType: string;
+    ETag: string;
+    LastModified: string;
+    Metadata: Record<string, any>;
+    ServerSideEncryption: string;
+}
+  
+interface AudioObject {
+    audioUrl: string;
+    metadata: AudioMetadata;
+}
+
+interface PropsType {
+    audio : AudioObject,
+    album : string,
+    title : string
+}
 // howler js로 howl 객체 생성하는 컴포넌트
-export function GetHowlAudio (audio :any){
+export function GetHowlAudio ({audio, album, title} :PropsType){
 
-    // audio 변수 초기화
-    audio = audio.audio;
+    let router = useRouter();
+    let autoPlay = useSelector((state :RootState) => state.autoPlay)
+    let dispatch = useDispatch();
+
+    useEffect(()=>{
+        console.log(autoPlay)
+    },[autoPlay])
 
     // 오디오 url 상태
     let [howlAudio, setHowlAudio] = useState<Howl | null>(null);
@@ -16,6 +47,34 @@ export function GetHowlAudio (audio :any){
     // 타이머 상태
     let [isPlaying, setIsPlaying] = useState(false);
     let [storedDuration, setStoredDuration] = useState(0);
+    // 배속 상태
+    let [rate, setRate] = useState(1);
+    // 다음 재생할 음원
+    const nextAudioRef = useRef<string>('');
+    let isAutoPlay = useRef<boolean>(autoPlay);
+
+    
+    const{data :folder, isLoading, isError} = useQuery(['getFolder'], () => fetchFolder(album));
+
+    useEffect(()=>{
+
+        if(folder !== undefined){
+            let nowPlay :number = -1;
+            folder.map ((d :{[key:string]:string}, i:number) => {
+                if(d.Key.includes(title)){
+                    nowPlay = i
+                }
+            })
+            let nextplay = nowPlay + 1
+            if(nextplay >= folder.length){
+                nextplay = 0;
+            }
+            let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
+            let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
+            nextAudioRef.current = next;
+        }
+
+    },[folder])
 
     // 최초 마운트 시 실행
     useEffect(()=>{
@@ -31,6 +90,10 @@ export function GetHowlAudio (audio :any){
             },
             onend: () => {
                 setIsPlaying(false);
+                setDuration(sound.duration());
+                if(isAutoPlay.current){
+                    router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                }
             }
         });
 
@@ -83,6 +146,20 @@ export function GetHowlAudio (audio :any){
         return () => clearInterval(timer);
     },[isPlaying])
 
+    useEffect(()=>{
+        if(howlAudio){
+            howlAudio.rate(rate);
+        }
+    },[rate])
+
+    const handleClick = (status :boolean) => {
+        // useRef로 생성된 ref 객체의 current 값을 변경합니다.
+        isAutoPlay.current = status;
+    };
+
+    if(isLoading) return<h2>로딩중이에염뿌우~</h2>
+    if(isError) return<h2>에러나쪄염뿌우~</h2>
+
     return(
         <div>
             {
@@ -90,16 +167,39 @@ export function GetHowlAudio (audio :any){
                 <button onClick={()=>{setIsPlaying(true)}}>재생</button>:
                 <button onClick={()=>{setIsPlaying(false)}}>일시정지</button>
             }
+            {
+                isAutoPlay.current?
+                <button onClick={()=>{
+                    handleClick(false);
+                    dispatch(setAutoPlayStatus(false));
+                }}>오토플레이 종료</button>:
+                <button onClick={()=>{
+                    handleClick(true);
+                    dispatch(setAutoPlayStatus(true));
+                }}>오토플레이</button>
+            }
             <div>
                 <span>볼륨 조절&nbsp;</span>
                 <input type='range' min="1" max="100" defaultValue="50" onChange={(e)=>{
                     let nowVolume :number= parseInt(e.target.value)
-                    setVolume(nowVolume/100)
+                    setVolume(nowVolume/100);
                 }}/>
+            </div>
+            <div>
+                <span>배속 조절&nbsp;</span>
+                <select defaultValue={1} onChange={(e)=>{
+                    setRate(parseFloat(e.target.value));
+                }}>
+                    <option>0.5</option>
+                    <option>1</option>
+                    <option>1.5</option>
+                    <option>2</option>
+                </select>
             </div>
             {/* <div>
                 <input type='range' readOnly/>
             </div> */}
+
             {
                 duration > 0?
                 <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
