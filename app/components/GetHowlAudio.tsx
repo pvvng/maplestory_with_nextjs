@@ -34,10 +34,6 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     let autoPlay = useSelector((state :RootState) => state.autoPlay)
     let dispatch = useDispatch();
 
-    useEffect(()=>{
-        console.log(autoPlay)
-    },[autoPlay])
-
     // 오디오 url 상태
     let [howlAudio, setHowlAudio] = useState<Howl | null>(null);
     // 볼륨 감시 상태
@@ -51,30 +47,11 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     let [rate, setRate] = useState(1);
     // 다음 재생할 음원
     const nextAudioRef = useRef<string>('');
+    // useRef로 오토플레이 상태 참조
     let isAutoPlay = useRef<boolean>(autoPlay);
 
-    
+    // 현재 음원이 위치한 folder 어레이 데이터 불러오기
     const{data :folder, isLoading, isError} = useQuery(['getFolder'], () => fetchFolder(album));
-
-    useEffect(()=>{
-
-        if(folder !== undefined){
-            let nowPlay :number = -1;
-            folder.map ((d :{[key:string]:string}, i:number) => {
-                if(d.Key.includes(title)){
-                    nowPlay = i
-                }
-            })
-            let nextplay = nowPlay + 1
-            if(nextplay >= folder.length){
-                nextplay = 0;
-            }
-            let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
-            let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
-            nextAudioRef.current = next;
-        }
-
-    },[folder])
 
     // 최초 마운트 시 실행
     useEffect(()=>{
@@ -109,13 +86,28 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
         };
     },[])
 
+    // 다음 재생할 음원 설정
     useEffect(()=>{
-        if(isPlaying && howlAudio){
-            howlAudio.play()
-        }else{
-            howlAudio?.pause()
+        if(folder !== undefined){
+            let nowPlay :number = -1;
+            folder.map ((d :{[key:string]:string}, i:number) => {
+                if(d.Key.includes(title)){
+                    nowPlay = i
+                }
+            })
+            let nextplay = nowPlay + 1
+            if(nextplay >= folder.length){
+                nextplay = 0;
+            }
+            let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
+            let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
+            nextAudioRef.current = next;
         }
-    },[isPlaying, howlAudio])
+    },[folder])
+
+    // useEffect(()=>{
+
+    // },[isPlaying, howlAudio])
 
     // 볼륨 조절
     useEffect(() => {
@@ -130,6 +122,14 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     }, [volume]);
 
     useEffect(()=>{
+        // 현재 상태가 재생중이라면 음원 플레이, 아니라면 음원 종료 
+        if(isPlaying && howlAudio){
+            howlAudio.play();
+        }else{
+            howlAudio?.pause();
+        }
+
+        // 현재 음원이 재생 중이라면 타이머 감소시키기
         let timer = setInterval(()=>{
             if(isPlaying){
                 // 1초마다 남은 음원 길이 감소
@@ -144,14 +144,17 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
             }
         },1000)
         return () => clearInterval(timer);
+
     },[isPlaying])
 
+    // 음원의 남은 길이 설정
     useEffect(()=>{
         if(howlAudio){
             howlAudio.rate(rate);
         }
     },[rate])
 
+    // 오토플레이 상태 전환 함수
     const handleClick = (status :boolean) => {
         // useRef로 생성된 ref 객체의 current 값을 변경합니다.
         isAutoPlay.current = status;
@@ -170,10 +173,12 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
             {
                 isAutoPlay.current?
                 <button onClick={()=>{
+                    // 클릭시 오토플레이 종료, store에 오토플레이 상태 저장
                     handleClick(false);
                     dispatch(setAutoPlayStatus(false));
                 }}>오토플레이 종료</button>:
                 <button onClick={()=>{
+                    // 클릭시 오토플레이 시작, store에 오토플레이 상태 저장
                     handleClick(true);
                     dispatch(setAutoPlayStatus(true));
                 }}>오토플레이</button>
