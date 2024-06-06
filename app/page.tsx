@@ -1,71 +1,56 @@
-'use client'
+import { getServerSession } from "next-auth";
+import MainPage from "./components/MainPage";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { SiginOutBtn, SignInBtn } from "./components/SiginTools/SignBtns";
+import { connectDB } from "@/util/database";
+import SiginForm from "./components/SiginTools/SignForm";
+import { Document, WithId } from "mongodb";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { fetchAlbums } from "./funcions/fetchAlbums";
-import { useQuery } from "react-query";
-
-export default function Home() {
-
-  let router = useRouter();
-
-  // input 참조
-  const inputRef = useRef<HTMLInputElement>(null);
-  // input value 저장하기
-  const valueRef = useRef<string>('');
-  
-  // input vlaue를 valueRef에 저장
-  const saveValue = () => {
-    if (inputRef.current) {
-      valueRef.current = inputRef.current.value;
-    }
-  };
-
-  // json 파일에 저장된 앨범 명 받아오기
-  const { data: albums, isLoading, isError } = useQuery('albumList', () => fetchAlbums());
-
-  // if(albums !== undefined){
-  //   for (let i = 0; i < 4 ; i++){
-  //     // console.log(albums.album.length)
-  //     let a = Math.floor(Math.random() * (albums.album.length - 1))
-  //     console.log(a)
-  //   }
-  // }
-
-  if(isLoading) return <h1>로딩중임 기달</h1>
-  if(isError) return <h1>에러남;; 우짜냐</h1>
-
-  return (
-    <div>
-      <input ref={inputRef} type="text" placeholder="앨범 검색" />
-      <button onClick={()=> {
-        // 검색어 저장 함수
-        saveValue();
-
-        if(valueRef.current !== ''){
-          // 페이지 라우팅
-          router.push('/album/' + valueRef.current);
-        }else{
-          // 예외처리
-          alert('검색어를 입력해야징!!');
-        }
-
-      }}>검색</button>
-      <h2>앨범</h2>
-      {
-        albums !== undefined?
-        albums.album.map((a:string, i:number) => 
-          <p key={i} 
-            onClick={()=>{router.push('/album/' + a)}}
-            style={{cursor :'pointer'}}  
-          >
-            {a}&nbsp;&nbsp;
-          </p>
-        ): null
-      }
-    </div>
-  );
+interface UserDataType {
+  _id :string,
+  email :string,
+  name :string,
+  playlist :string[],
 }
 
+export default async function Home() {
+
+  let session = await getServerSession(authOptions);
+
+  // db에서 회원 정보 불러오기
+  const db = (await connectDB).db('maple-bgm');
+  let res = await db.collection('userdata').find().toArray();
+
+  // 회원가입 여부 확인
+  let isExist = false;
+  // 현재 로그인 한 유저 데이터 재설정
+  let userdata : WithId<Document> | undefined = undefined
+
+  res.map(ud => {
+    if(ud.email === session?.user?.email){
+      isExist = true;
+      userdata = ud
+    }
+  })
 
 
+  // 로그인 한 경우에만 보여주는 화면
+  if (session) {
+    return(
+      !isExist?
+      <SiginForm session={session} />:
+      <div>
+        <SiginOutBtn/>
+        <MainPage userdata = {userdata} />
+      </div>
+    )
+  }
+
+  // 로그인하지 않았을때 보여주는 화면
+  return(
+    <div>
+      <SignInBtn/>
+      <h1>로그인 후 이용가능함ㅎ</h1>
+    </div>
+  )
+}

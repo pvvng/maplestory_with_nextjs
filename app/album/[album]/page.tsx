@@ -12,8 +12,6 @@ export default async function AlbumPage(props :any){
     // 공백 제거
     decodedParams = decodedParams.replaceAll(" ", "");
 
-    console.log(storedParams)
-
     // db에서 유사어 발견시 true로 변함
     let isFound = false;
     // 검색어가 db에 저장된 값과 완전히 일치하는지 확인하는 변수
