@@ -8,7 +8,7 @@ export function SignInBtn(){
   )
 }
 
-export function SiginOutBtn(){
+export function SignOutBtn(){
   return(
     <button onClick={()=>{signOut()}}>로그아웃</button>
   )

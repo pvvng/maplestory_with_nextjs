@@ -1,5 +1,4 @@
-import { SiginOutBtn, SignInBtn } from "@/app/components/SiginTools/SignBtns";
-import DetailSong from "./DetailSong";
+import DetailSong from "../../../components/DetailSong";
 import getDBuserdata from "@/app/funcions/getDBuserdata";
 
 interface ParamsType {
@@ -14,18 +13,10 @@ export default async function Songs(props: any) {
 
   const { session, isExist, userdata } = await getDBuserdata();
 
-  if(!session) return (
-    <div>
-      <SignInBtn />
-      <h2>로그인하구 오셈ㅎ</h2>
-    </div>
-  )
+  if(!session) return <h2>로그인하구 오셈ㅎ</h2>
 
   return(
-    <div>
-      <SiginOutBtn />
       <DetailSong params={params} userdata={userdata} />
-    </div>
   )
 
 }

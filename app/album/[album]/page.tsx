@@ -2,7 +2,6 @@ import { connectDB } from "@/util/database";
 import Album from "../../components/Album";
 import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
 import getDBuserdata from "@/app/funcions/getDBuserdata";
-import { SiginOutBtn, SignInBtn } from "@/app/components/SiginTools/SignBtns";
 
 export default async function AlbumPage(props :any){
 
@@ -69,15 +68,10 @@ export default async function AlbumPage(props :any){
     }
 
     // 로그인 x시 예외처리
-    if(!session) return (
-        <div>
-            <SignInBtn />
-            <h1>로그인하구 오라궁!</h1>       
-        </div>
-    )
+    if(!session) return <h1>로그인하구 오라궁!</h1>       
+    
     return(
         <div>
-            <SiginOutBtn />
             {
                 urlOk?
                 null:
