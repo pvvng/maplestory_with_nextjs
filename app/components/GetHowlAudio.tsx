@@ -6,6 +6,7 @@ import { fetchFolder } from '../funcions/fetchAWS';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../layout';
 import { setAutoPlayStatus, store } from '../store';
+import { useAudioEffect, useAudioQuery } from '../funcions/useAlbumDataQuery';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -51,8 +52,9 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     let isAutoPlay = useRef<boolean>(autoPlay);
 
     // 현재 음원이 위치한 folder 어레이 데이터 불러오기
-    const{data :folder, isLoading, isError} = useQuery(['getFolder'], () => fetchFolder(album));
-
+    const {folder, isLoading, isError} = useAudioQuery(album);
+    useAudioEffect(folder, title, nextAudioRef);
+    
     // 최초 마운트 시 실행
     useEffect(()=>{
         const sound :Howl = new Howl({
@@ -86,24 +88,7 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
         };
     },[])
 
-    // 다음 재생할 음원 설정
-    useEffect(()=>{
-        if(folder !== undefined){
-            let nowPlay :number = -1;
-            folder.map ((d :{[key:string]:string}, i:number) => {
-                if(d.Key.includes(title)){
-                    nowPlay = i
-                }
-            })
-            let nextplay = nowPlay + 1
-            if(nextplay >= folder.length){
-                nextplay = 0;
-            }
-            let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
-            let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
-            nextAudioRef.current = next;
-        }
-    },[folder])
+
 
     // 볼륨 조절
     useEffect(() => {
@@ -153,9 +138,6 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
         // useRef로 생성된 ref 객체의 current 값을 변경합니다.
         isAutoPlay.current = status;
     };
-
-    if(isLoading) return<h2>로딩중이에염뿌우~</h2>
-    if(isError) return<h2>에러나쪄염뿌우~</h2>
 
     return(
         <div>
