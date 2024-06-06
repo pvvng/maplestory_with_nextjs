@@ -1,8 +1,6 @@
 import { Howl } from 'howler';
 import {  useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
-import { fetchFolder } from '../funcions/fetchAWS';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../layout';
 import { setAutoPlayStatus, store } from '../store';
@@ -87,8 +85,6 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
             sound.stop();
         };
     },[])
-
-
 
     // 볼륨 조절
     useEffect(() => {
