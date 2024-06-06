@@ -5,6 +5,7 @@ import { Document, WithId } from 'mongodb';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import SongHeartBtn from './SongHeartBtn';
+import { getFolderForFile } from '../funcions/getFolderForFile';
 // import { getFolderForFile } from '../utils/folderUtils';
 
 interface PropsType {
@@ -36,7 +37,6 @@ export default function PlayList ({ userdata } :PropsType){
     }
   },[playlist])
 
-  // useEffect(()=>{console.log(folderName)},[folderName])
 
   if (playlist.length === 0) return <h2>플레이리스트가 비었다궁!!</h2>;
 
@@ -62,15 +62,3 @@ export default function PlayList ({ userdata } :PropsType){
   );
 };
 
-// 파일 이름을 파라미터로 넣으면 해당 파일의 폴더 이름을 검색하는 함수
-const getFolderForFile = async (fileName: string): Promise<string> => {
-  try {
-    const response = await axios.get(`/api/findFolder`, {
-      params: { fileName },
-    });
-    return response.data.folderName;
-  } catch (error) {
-    console.error('Error fetching folder:', error);
-    throw error;
-  }
-};
