@@ -1,8 +1,12 @@
 import { connectDB } from "@/util/database";
 import Album from "../../components/Album";
 import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
+import getDBuserdata from "@/app/funcions/getDBuserdata";
+import { SiginOutBtn, SignInBtn } from "@/app/components/SiginTools/SignBtns";
 
 export default async function AlbumPage(props :any){
+
+    const { session, isExist, userdata } = await getDBuserdata();
 
     // params 한글로 디코딩
     let decodedParams = decodeURIComponent(props.params.album);
@@ -64,8 +68,16 @@ export default async function AlbumPage(props :any){
         isFound = false
     }
 
+    // 로그인 x시 예외처리
+    if(!session) return (
+        <div>
+            <SignInBtn />
+            <h1>로그인하구 오라궁!</h1>       
+        </div>
+    )
     return(
         <div>
+            <SiginOutBtn />
             {
                 urlOk?
                 null:
@@ -75,7 +87,7 @@ export default async function AlbumPage(props :any){
                 </p> :
                 <p>이상한거 찾지 말고 추천 앨범이나 들으십쇼</p>
             }
-            <Album decodedParams = {decodedParams}/>
+            <Album decodedParams = {decodedParams} userdata={userdata} />
         </div>
     )
 }

@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { fetchAlbums } from "../funcions/fetchAlbums";
 import { useQuery } from "react-query";
-import { Session } from "next-auth";
 
 // // props로 들어오는 유저 정보 타입 설정
 // interface Props {
@@ -12,8 +11,6 @@ import { Session } from "next-auth";
 // }
 
 export default function MainPage ({userdata} :any){
-
-  console.log(userdata)
   
   let router = useRouter();
 

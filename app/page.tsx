@@ -5,34 +5,11 @@ import { SiginOutBtn, SignInBtn } from "./components/SiginTools/SignBtns";
 import { connectDB } from "@/util/database";
 import SiginForm from "./components/SiginTools/SignForm";
 import { Document, WithId } from "mongodb";
-
-interface UserDataType {
-  _id :string,
-  email :string,
-  name :string,
-  playlist :string[],
-}
+import getDBuserdata from "./funcions/getDBuserdata";
 
 export default async function Home() {
 
-  let session = await getServerSession(authOptions);
-
-  // db에서 회원 정보 불러오기
-  const db = (await connectDB).db('maple-bgm');
-  let res = await db.collection('userdata').find().toArray();
-
-  // 회원가입 여부 확인
-  let isExist = false;
-  // 현재 로그인 한 유저 데이터 재설정
-  let userdata : WithId<Document> | undefined = undefined
-
-  res.map(ud => {
-    if(ud.email === session?.user?.email){
-      isExist = true;
-      userdata = ud
-    }
-  })
-
+  const {session, isExist, userdata} = await getDBuserdata();
 
   // 로그인 한 경우에만 보여주는 화면
   if (session) {
