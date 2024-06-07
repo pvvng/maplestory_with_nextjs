@@ -2,9 +2,11 @@ import { Howl } from 'howler';
 import {  useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../layout';
-import { setAutoPlayStatus, store } from '../store';
-import { useAudioEffect, useAudioQuery } from '../funcions/useAlbumDataQuery';
+import { RootState } from '../../layout';
+import { setAutoPlayStatus, store } from '../../store';
+import { useAudioEffect, useAudioQuery } from '../../funcions/autoplay/useAlbumDataQuery';
+import { WithId, Document } from 'mongodb';
+import { playlistAutoPlay } from '../../funcions/autoplay/playlistAutoPlay';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -25,9 +27,11 @@ interface PropsType {
     audio : AudioObject,
     album : string,
     title : string,
+    albumArr ?: string[],
+    userdata ?: WithId<Document> | undefined
 }
 // howler js로 howl 객체 생성하는 컴포넌트
-export function GetHowlAudio ({audio, album, title,} :PropsType){
+export function GetHowlAudio ({audio, album, title, albumArr, userdata} :PropsType){
 
     let router = useRouter();
     let autoPlay = useSelector((state :RootState) => state.autoPlay)
@@ -49,9 +53,14 @@ export function GetHowlAudio ({audio, album, title,} :PropsType){
     // useRef로 오토플레이 상태 참조
     let isAutoPlay = useRef<boolean>(autoPlay);
 
-    // 현재 음원이 위치한 folder 어레이 데이터 불러오기
-    const {folder, isLoading, isError} = useAudioQuery(album);
-    useAudioEffect(folder, title, nextAudioRef);
+    if(userdata !== undefined){
+        // 유저의 플레이리스트인 경우의 자동재생 함수
+        playlistAutoPlay(userdata, title, albumArr, nextAudioRef);
+    }else{
+        // 현재 음원이 위치한 folder 어레이 데이터 불러오기
+        const {folder, isLoading, isError} = useAudioQuery(album);
+        useAudioEffect(folder, title, nextAudioRef);
+    }
     
     // 최초 마운트 시 실행
     useEffect(()=>{
@@ -69,7 +78,13 @@ export function GetHowlAudio ({audio, album, title,} :PropsType){
                 setIsPlaying(false);
                 setDuration(sound.duration());
                 if(isAutoPlay.current){
-                    router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                    if(userdata !== undefined){
+                        // 유저가 플레이리스트 재생 중일 경우 아래 경로로 라우팅
+                        router.push(nextAudioRef.current)
+                    }else{
+                        // 유저가 일반 앨범 재생 중일 경우 아래 경로로 라우팅
+                        router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                    }
                 }
             }
         });
@@ -172,7 +187,6 @@ export function GetHowlAudio ({audio, album, title,} :PropsType){
                 duration > 0?
                 <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
                 <p>로딩중임여</p>
-                
             }
         </div>
     )

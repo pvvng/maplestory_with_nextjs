@@ -1,5 +1,5 @@
-import DetailSong from "../../../components/DetailSong";
-import getDBuserdata from "@/app/funcions/getDBuserdata";
+import DetailSong from "@/app/components/play/DetailSong";
+import getDBuserdata from "@/app/funcions/fetch/getDBuserdata";
 
 interface ParamsType {
   album :string,

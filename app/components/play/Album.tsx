@@ -2,9 +2,9 @@
 
 import { useQuery } from "react-query";
 import { useRouter } from "next/navigation";
-import { fetchFolder } from "@/app/funcions/fetchAWS";
+import { fetchFolder } from "@/app/funcions/fetch/fetchAWS";
 import { Document, WithId } from "mongodb";
-import AlbumHeartBtn from "./heartbtn/AlbumHeartBtn";
+import AlbumHeartBtn from "../heartbtn/AlbumHeartBtn";
 import { useEffect, useState } from "react";
 
 // 앨범 정보를 받아오는 컴포넌트 

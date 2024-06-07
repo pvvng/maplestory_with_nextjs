@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initial :boolean = false
 
+// 오토플레이 여부 감시
 const autoPlay = createSlice({
   name: 'autoPlay',
   initialState : initial,

@@ -2,13 +2,8 @@
 
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
-import { fetchAlbums } from "../funcions/fetchAlbums";
+import { fetchAlbums } from "../funcions/fetch/fetchAlbums";
 import { useQuery } from "react-query";
-
-// // props로 들어오는 유저 정보 타입 설정
-// interface Props {
-//   session: Session;
-// }
 
 export default function MainPage ({userdata} :any){
   
@@ -28,14 +23,6 @@ export default function MainPage ({userdata} :any){
 
   // json 파일에 저장된 앨범 명 받아오기
   const { data: albums, isLoading, isError } = useQuery('albumList', () => fetchAlbums());
-
-  // if(albums !== undefined){
-  //   for (let i = 0; i < 4 ; i++){
-  //     // console.log(albums.album.length)
-  //     let a = Math.floor(Math.random() * (albums.album.length - 1))
-  //     console.log(a)
-  //   }
-  // }
 
   if(isLoading) return <h1>로딩중임 기달</h1>
   if(isError) return <h1>에러남;; 우짜냐</h1>

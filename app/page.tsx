@@ -1,6 +1,6 @@
 import MainPage from "./components/MainPage";
 import SiginForm from "./components/SiginTools/SignForm";
-import getDBuserdata from "./funcions/getDBuserdata";
+import getDBuserdata from "./funcions/fetch/getDBuserdata";
 
 export default async function Home() {
 

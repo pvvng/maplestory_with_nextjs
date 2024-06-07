@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { fetchFolder } from '../funcions/fetchAWS';
+import { fetchFolder } from '../fetch/fetchAWS';
 
 export const useAudioEffect = (folder: any, title :any, nextAudioRef :any) => {
   useEffect(() => {

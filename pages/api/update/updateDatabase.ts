@@ -5,13 +5,13 @@ import { S3 } from 'aws-sdk';
 import { MongoClient } from 'mongodb';
 
 const s3 = new S3({
-  accessKeyId: process.env.ACCESS_KEY!,
-  secretAccessKey: process.env.SECRET_KEY!,
+  accessKeyId: process.env.AWS_ACCESS_KEY!,
+  secretAccessKey: process.env.AWS_SECRET_KEY!,
 });
 
 const uri = process.env.NEXT_PUBLIC_MONGODB_KEY!;
 const dbName = 'maple-bgm';
-const bucketName = process.env.BUCKET_NAME!;
+const bucketName = process.env.AWS_BUCKET_NAME!;
 
 async function listS3Objects(bucketName: string) {
   const params: S3.ListObjectsV2Request = {

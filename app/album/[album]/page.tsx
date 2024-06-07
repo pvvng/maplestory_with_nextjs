@@ -1,7 +1,7 @@
 import { connectDB } from "@/util/database";
-import Album from "../../components/Album";
+import Album from "../../components/play/Album";
 import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
-import getDBuserdata from "@/app/funcions/getDBuserdata";
+import getDBuserdata from "@/app/funcions/fetch/getDBuserdata";
 
 export default async function AlbumPage(props :any){
 
