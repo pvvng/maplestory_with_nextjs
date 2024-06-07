@@ -11,7 +11,6 @@ export default async function handler (req :NextApiRequest, res :NextApiResponse
   let userID = req.body._id
   let 바꿀거 = req.body
   delete 바꿀거._id;
-  console.log(바꿀거)
 
   const db = (await connectDB).db('maple-bgm');
   let result = await db.collection('userdata').updateOne(
