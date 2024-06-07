@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { SignOutBtn, SignInBtn } from "./SiginTools/SignBtns";
 import { useRouter } from "next/navigation";
+import { useQuery } from "react-query";
 
 export default function Navbar(){
   
@@ -30,3 +31,4 @@ export default function Navbar(){
     </div>
   )
 }
+
