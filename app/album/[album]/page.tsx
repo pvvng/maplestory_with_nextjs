@@ -1,8 +1,11 @@
 import { connectDB } from "@/util/database";
-import Album from "../../components/Album";
+import Album from "../../components/play/Album";
 import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
+import getDBuserdata from "@/app/funcions/fetch/getDBuserdata";
 
 export default async function AlbumPage(props :any){
+
+    const { session, isExist, userdata } = await getDBuserdata();
 
     // params 한글로 디코딩
     let decodedParams = decodeURIComponent(props.params.album);
@@ -11,8 +14,6 @@ export default async function AlbumPage(props :any){
 
     // 공백 제거
     decodedParams = decodedParams.replaceAll(" ", "");
-
-    console.log(storedParams)
 
     // db에서 유사어 발견시 true로 변함
     let isFound = false;
@@ -66,6 +67,9 @@ export default async function AlbumPage(props :any){
         isFound = false
     }
 
+    // 로그인 x시 예외처리
+    if(!session) return <h1>로그인하구 오라궁!</h1>       
+    
     return(
         <div>
             {
@@ -77,7 +81,7 @@ export default async function AlbumPage(props :any){
                 </p> :
                 <p>이상한거 찾지 말고 추천 앨범이나 들으십쇼</p>
             }
-            <Album decodedParams = {decodedParams}/>
+            <Album decodedParams = {decodedParams} userdata={userdata} />
         </div>
     )
 }

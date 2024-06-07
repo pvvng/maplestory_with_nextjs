@@ -4,6 +4,8 @@ import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import Navbar from './components/Navbar';
+import { SessionProvider } from 'next-auth/react';
 
 const queryClient = new QueryClient();
 
@@ -20,12 +22,16 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <head>
         	<title>메이뿡스토리</title>
         </head>
-        <body>
-          <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
+        {/* 가로 스크롤바 없애놓음. 나중에 필요하면 꺼내셈 */}
+        <body style={{margin:'0px', boxSizing:'border-box', overflowX:'hidden'}}>
+          <SessionProvider>
+            <Provider store={store}>
+              <QueryClientProvider client={queryClient}>
+                <Navbar />
                 {children}
-            </QueryClientProvider>
-          </Provider>
+              </QueryClientProvider>
+            </Provider>
+          </SessionProvider>
         </body>
     </html>
 );

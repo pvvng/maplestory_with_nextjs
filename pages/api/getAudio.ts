@@ -8,9 +8,9 @@ interface BucketType {
 
 export default async function handler(req :NextApiRequest, res :NextApiResponse) {
 
-    const accessKey = process.env.ACCESS_KEY;
-    const secretKey  = process.env.SECRET_KEY;
-    const bucketName = process.env.BUCKET_NAME;
+    const accessKey = process.env.AWS_ACCESS_KEY;
+    const secretKey  = process.env.AWS_SECRET_KEY;
+    const bucketName = process.env.AWS_BUCKET_NAME;
 
     if (accessKey === undefined || secretKey  === undefined || bucketName  === undefined){
         throw new Error('키 에러 발생');

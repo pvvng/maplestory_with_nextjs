@@ -1,11 +1,12 @@
 import { Howl } from 'howler';
 import {  useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
-import { fetchFolder } from '../funcions/fetchAWS';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../layout';
-import { setAutoPlayStatus } from '../store';
+import { RootState } from '../../layout';
+import { setAutoPlayStatus, store } from '../../store';
+import { useAudioEffect, useAudioQuery } from '../../funcions/autoplay/useAlbumDataQuery';
+import { WithId, Document } from 'mongodb';
+import { playlistAutoPlay } from '../../funcions/autoplay/playlistAutoPlay';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -25,10 +26,12 @@ interface AudioObject {
 interface PropsType {
     audio : AudioObject,
     album : string,
-    title : string
+    title : string,
+    albumArr ?: string[],
+    userdata ?: WithId<Document> | undefined
 }
 // howler js로 howl 객체 생성하는 컴포넌트
-export function GetHowlAudio ({audio, album, title} :PropsType){
+export function GetHowlAudio ({audio, album, title, albumArr, userdata} :PropsType){
 
     let router = useRouter();
     let autoPlay = useSelector((state :RootState) => state.autoPlay)
@@ -43,16 +46,22 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
     // 타이머 상태
     let [isPlaying, setIsPlaying] = useState(false);
     let [storedDuration, setStoredDuration] = useState(0);
-    // 배속 상태
-    let [rate, setRate] = useState(1);
+    // progress bar 넓이
+    let [remainDuration, setRemainDuration] = useState(0);
     // 다음 재생할 음원
     const nextAudioRef = useRef<string>('');
     // useRef로 오토플레이 상태 참조
     let isAutoPlay = useRef<boolean>(autoPlay);
 
-    // 현재 음원이 위치한 folder 어레이 데이터 불러오기
-    const{data :folder, isLoading, isError} = useQuery(['getFolder'], () => fetchFolder(album));
-
+    if(userdata !== undefined){
+        // 유저의 플레이리스트인 경우의 자동재생 함수
+        playlistAutoPlay(userdata, title, albumArr, nextAudioRef);
+    }else{
+        // 현재 음원이 위치한 folder 어레이 데이터 불러오기
+        const {folder, isLoading, isError} = useAudioQuery(album);
+        useAudioEffect(folder, title, nextAudioRef);
+    }
+    
     // 최초 마운트 시 실행
     useEffect(()=>{
         const sound :Howl = new Howl({
@@ -69,7 +78,13 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
                 setIsPlaying(false);
                 setDuration(sound.duration());
                 if(isAutoPlay.current){
-                    router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                    if(userdata !== undefined){
+                        // 유저가 플레이리스트 재생 중일 경우 아래 경로로 라우팅
+                        router.push(nextAudioRef.current)
+                    }else{
+                        // 유저가 일반 앨범 재생 중일 경우 아래 경로로 라우팅
+                        router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                    }
                 }
             }
         });
@@ -85,29 +100,6 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
             sound.stop();
         };
     },[])
-
-    // 다음 재생할 음원 설정
-    useEffect(()=>{
-        if(folder !== undefined){
-            let nowPlay :number = -1;
-            folder.map ((d :{[key:string]:string}, i:number) => {
-                if(d.Key.includes(title)){
-                    nowPlay = i
-                }
-            })
-            let nextplay = nowPlay + 1
-            if(nextplay >= folder.length){
-                nextplay = 0;
-            }
-            let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
-            let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
-            nextAudioRef.current = next;
-        }
-    },[folder])
-
-    // useEffect(()=>{
-
-    // },[isPlaying, howlAudio])
 
     // 볼륨 조절
     useEffect(() => {
@@ -147,21 +139,16 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
 
     },[isPlaying])
 
-    // 음원의 남은 길이 설정
+    // 0~100 까지 남은 음원 길이에 비례해서 progress bar의 width 설정
     useEffect(()=>{
-        if(howlAudio){
-            howlAudio.rate(rate);
-        }
-    },[rate])
+        setRemainDuration(100 - ((duration/storedDuration)*100));
+    },[duration])
 
     // 오토플레이 상태 전환 함수
     const handleClick = (status :boolean) => {
         // useRef로 생성된 ref 객체의 current 값을 변경합니다.
         isAutoPlay.current = status;
     };
-
-    if(isLoading) return<h2>로딩중이에염뿌우~</h2>
-    if(isError) return<h2>에러나쪄염뿌우~</h2>
 
     return(
         <div>
@@ -190,26 +177,16 @@ export function GetHowlAudio ({audio, album, title} :PropsType){
                     setVolume(nowVolume/100);
                 }}/>
             </div>
-            <div>
-                <span>배속 조절&nbsp;</span>
-                <select defaultValue={1} onChange={(e)=>{
-                    setRate(parseFloat(e.target.value));
-                }}>
-                    <option>0.5</option>
-                    <option>1</option>
-                    <option>1.5</option>
-                    <option>2</option>
-                </select>
+            
+            {/* progress bar */}
+            <div style={{width:'200px', height:'20px', marginTop:'10px', background:'#eee'}}>
+                <div style={{width: remainDuration + '%', height:'100%', background:'red'}}></div>
             </div>
-            {/* <div>
-                <input type='range' readOnly/>
-            </div> */}
 
             {
                 duration > 0?
                 <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
                 <p>로딩중임여</p>
-                
             }
         </div>
     )
