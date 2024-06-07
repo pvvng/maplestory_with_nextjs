@@ -3,27 +3,27 @@
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
-import { Document, WithId } from "mongodb";
 import { getServerSession } from "next-auth";
 
-export default async function getDBuserdata(){
-  let session = await getServerSession(authOptions);
+export default async function getDBuserdata() {
+  // 현재 세션 가져오기
+  const session = await getServerSession(authOptions);
 
-  // db에서 회원 정보 불러오기
+  // DB 연결
   const db = (await connectDB).db('maple-bgm');
-  let res = await db.collection('userdata').find().toArray();
+  
+  // 사용자 정보 가져오기
+  const userDataCollection = db.collection('userdata');
+  const allUsers = await userDataCollection.find().toArray();
 
-  // 회원가입 여부 확인
-  let isExist = false;
-  // 현재 로그인 한 유저 데이터 재설정
-  let userdata : WithId<Document> | undefined = undefined
+  // 현재 로그인한 사용자의 이메일
+  const currentUserEmail = session?.user?.email;
 
-  res.map(ud => {
-    if(ud.email === session?.user?.email){
-      isExist = true;
-      userdata = ud
-    }
-  })
+  // 현재 로그인한 사용자와 일치하는 사용자 정보 찾기
+  const currentUserData = allUsers.find(user => user.email === currentUserEmail);
 
-  return { session, isExist, userdata }
+  // 사용자 정보가 존재하는지 여부 확인
+  const isExist = !!currentUserData;
+
+  return { session, isExist, userdata: currentUserData };
 }

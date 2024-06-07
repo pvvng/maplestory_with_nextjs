@@ -5,11 +5,16 @@ import { useQuery } from "react-query";
 import { GetHowlAudio } from "@/app/components/GetHowlAudio";
 import Album from "@/app/components/Album";
 import { Document, WithId } from "mongodb";
-import SongHeartBtn from "@/app/components/SongHeartBtn";
+import SongHeartBtn from "@/app/components/heartbtn/SongHeartBtn";
+import PlayList from "./playlist/PlayList";
 
 interface PropsType {
   params : ParamsType,
-  userdata :WithId<Document> | undefined
+  userdata :WithId<Document> | undefined,
+  // 마이페이지에서 이 컴포넌트 불러올 시 작동되는 인자
+  myPageComponent ?: boolean,
+  // 플레이리스트 안의 노래가 종속된 폴더
+  albumArr :string[]
 }
 
 interface ParamsType {
@@ -17,7 +22,7 @@ interface ParamsType {
   title :string
 }
 
-export default function DetailSong({params, userdata} :PropsType){
+export default function DetailSong({params, userdata, myPageComponent, albumArr} :PropsType){
 
   // params 디코딩
   const decodedParams = {
@@ -48,7 +53,11 @@ export default function DetailSong({params, userdata} :PropsType){
         <SongHeartBtn userdata={userdata} />
         <h4>{decodedParams.album}</h4>
         <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} />
-        <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />
+        {
+          !myPageComponent?
+          <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />
+          :<PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+        }
       </div>
     );
   }

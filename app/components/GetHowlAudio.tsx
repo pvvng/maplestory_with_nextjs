@@ -24,10 +24,10 @@ interface AudioObject {
 interface PropsType {
     audio : AudioObject,
     album : string,
-    title : string
+    title : string,
 }
 // howler js로 howl 객체 생성하는 컴포넌트
-export function GetHowlAudio ({audio, album, title} :PropsType){
+export function GetHowlAudio ({audio, album, title,} :PropsType){
 
     let router = useRouter();
     let autoPlay = useSelector((state :RootState) => state.autoPlay)

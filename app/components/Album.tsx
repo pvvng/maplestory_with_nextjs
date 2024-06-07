@@ -4,7 +4,8 @@ import { useQuery } from "react-query";
 import { useRouter } from "next/navigation";
 import { fetchFolder } from "@/app/funcions/fetchAWS";
 import { Document, WithId } from "mongodb";
-import AlbumHeartBtn from "./AlbumHeartBtn";
+import AlbumHeartBtn from "./heartbtn/AlbumHeartBtn";
+import { useEffect, useState } from "react";
 
 // 앨범 정보를 받아오는 컴포넌트 
 // decodedParams : 앨범명 (ex. 엔젤릭버스터) , title : 현재 곡 제목(song page에서만)
@@ -41,7 +42,7 @@ export default function Album({decodedParams, title, userdata} :PropsType){
                     <h2>{decodedParams}</h2>
                     {
                     folder.map( (f :S3Object, i:number) => {
-                        let albumName:string = (f.Key.split('.')[0].split('/')[1]);
+                        let albumName :string = (f.Key.split('.')[0].split('/')[1]);
                         if(albumName === title){
                             return null
                         }

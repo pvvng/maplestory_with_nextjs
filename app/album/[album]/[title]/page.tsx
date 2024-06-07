@@ -15,8 +15,6 @@ export default async function Songs(props: any) {
 
   if(!session) return <h2>로그인하구 오셈ㅎ</h2>
 
-  return(
-      <DetailSong params={params} userdata={userdata} />
-  )
+  return <DetailSong params={params} userdata={userdata} />
 
 }
