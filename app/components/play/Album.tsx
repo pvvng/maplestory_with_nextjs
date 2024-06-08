@@ -66,13 +66,3 @@ export default function Album({decodedParams, title, userdata} :PropsType){
         </div>
     )
 }
-
-const fetchImages = async () => {
-    try {
-      const response = await fetch('/api/getImage');
-      const data = await response.json();
-      return data
-    } catch (error) {
-      console.error('Failed to fetch images', error);
-    }
-};

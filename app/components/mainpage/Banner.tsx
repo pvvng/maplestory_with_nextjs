@@ -3,15 +3,21 @@
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from 'react';
 
 interface PropsType {
-  bannerAlbum :{album :string, des :string, url:string}
+  bannerContainer : BannerItem[]
+}
+
+interface BannerItem {
+  album: string;
+  des: string;
+  url: string;
 }
 
 let BannerBox = styled.div`
   width : 100%;
-  background : white;
   margin-left :auto;
   margin-right :auto;
   margin-top: 20px;
@@ -19,6 +25,7 @@ let BannerBox = styled.div`
   padding : 30px;
   border-radius : 20px;
   max-width : 1024px;
+  background :white;
 `
 
 let InnerBox = styled.div`
@@ -34,35 +41,75 @@ let InnerBox = styled.div`
 
 let GoBtn = styled.button`
   float :right;
-  opacity :0;
   transition :all 0.5s;
   border : none;
+  font-size : 14px;
 
   &:hover{
-    background :#FF6666;
+    background :#CC0000;
   }
 `
 
-export default function Banner({bannerAlbum} :PropsType){
+let SlideBtn = styled.button<{color :string}>`
+  border:none;
+  background : none;
+  font-size : 10px;
+  color : ${props => props.color};
+`
+
+export default function Banner({bannerContainer} :PropsType){
 
   let router = useRouter();
+
+  let [bannerNum, setBannerNum] = useState(0);
+  let [slideBtnColor, setSlideBtnColor] = useState<string[]>([]);
+
+  useEffect(()=>{
+    let timer = setTimeout(()=>{
+      if(bannerNum !== bannerContainer.length - 1){
+        setBannerNum(pre => pre + 1);
+      }else{
+        setBannerNum(0)
+      }
+    }, 10000)
+    return () => clearTimeout(timer)
+  },[bannerNum]);
+
+  useEffect(()=>{
+    let temp = new Array(bannerContainer.length).fill('grey');
+    temp[bannerNum] = '#CC0000';
+    setSlideBtnColor([...temp]);
+  },[bannerNum])
 
   return(
     <BannerBox>
       <div className='row'>
         <InnerBox className="col-6">
-          <img src={bannerAlbum.url} alt={bannerAlbum.album} width={'100%'}  />
+          <img src={bannerContainer[bannerNum].url} alt={bannerContainer[bannerNum].album} width={'100%'}  />
         </InnerBox>
         <InnerBox className="col-6">
-          <p className='fs-2 fw-bold'>{bannerAlbum.album}</p>
-          <p>{bannerAlbum.des}</p>
+          <div style={{marginTop:'auto', marginBottom:'auto'}}>
+            <p className='fs-4 fw-bold'>{bannerContainer[bannerNum].album}</p>
+            <p style={{fontSize:'14px'}}>{bannerContainer[bannerNum].des}</p>
+          </div>
           <GoBtn className='btn btn-secondary' onClick={()=>{
-            router.push('/album/' + bannerAlbum.album)
+            router.push('/album/' + bannerContainer[bannerNum].album)
           }}>
           <FontAwesomeIcon icon={faPlay} /> &nbsp;
             감상하러 가기
           </GoBtn>
         </InnerBox>
+      </div>
+      <div className='mt-2' style={{textAlign:'center'}}>
+        {
+          bannerContainer.map((bc :BannerItem, i:number) => 
+          <SlideBtn key={i} color={slideBtnColor[i]} onClick={()=>{
+            setBannerNum(i)
+          }}>
+            <FontAwesomeIcon icon={faCircle} />
+          </SlideBtn>
+        )
+        }
       </div>
       <div style={{clear:'both'}}></div>
     </BannerBox>
