@@ -1,34 +1,48 @@
+
+import styled from "styled-components";
+import Link from "next/link";
+import { SignInBtn, SignOutBtn } from "./SiginTools/SignBtns";
 import { useSession } from "next-auth/react";
-import { SignOutBtn, SignInBtn } from "./SiginTools/SignBtns";
 import { useRouter } from "next/navigation";
-import { useQuery } from "react-query";
+
+
+
+let NavbarContainer = styled.div`
+  width:100%;
+  padding:20px;
+  background: black;
+  color :white;
+  align-items :center;
+`
 
 export default function Navbar(){
-  
-  let session = useSession();
-  let router = useRouter();
+
+  let session = useSession()
+
+  let router = useRouter()
 
   return(
-    <div style={{width:'100%', padding:'20px', background:'grey'}}>
-      <span 
+    <NavbarContainer className="row">
+      <a
+        className="col-6"
         style={{cursor : 'pointer'}}
         onClick={()=>{router.push('/')}}
       >
-        메이뿡스토리
-      </span>
-      <span> </span>
-      <span style={{cursor:'pointer'}} onClick={()=>{router.push('/mypage')}}>
-        마이페이지
-      </span>
-      <span> </span>
-      {
-        session.data !== undefined && !session.data?
-        <SignInBtn />:
-        <span>
-          <SignOutBtn />
+        <img src='/maplestory-icon.png' width={'50px'} />
+      </a>
+
+      <div className="col-6" style={{textAlign:'right'}}>
+        <span className="fs-5 fw-bold" style={{cursor:'pointer'}} onClick={()=>{router.push('/mypage')}}>
+          &nbsp; 마이페이지 &nbsp;
         </span>
-      }
-    </div>
+
+        {
+          !session.data?
+          <SignInBtn />:
+          <SignOutBtn />
+        }
+      </div>
+    </NavbarContainer>
   )
 }
 

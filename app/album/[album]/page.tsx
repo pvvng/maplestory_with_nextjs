@@ -68,7 +68,7 @@ export default async function AlbumPage(props :any){
     }
 
     // 로그인 x시 예외처리
-    if(!session) return <h1>로그인하구 오라궁!</h1>       
+    if(!session) return <h1 style={{textAlign:'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>       
     
     return(
         <div>
@@ -79,7 +79,10 @@ export default async function AlbumPage(props :any){
                 <p>이걸 찾으셨나요? &nbsp; 
                     <span style={{textDecorationLine:'underline', color:'blue'}}>{decodedParams}</span>
                 </p> :
-                <p>이상한거 찾지 말고 추천 앨범이나 들으십쇼</p>
+                <div>
+                    <p>검색 결과가 없습니다.</p>
+                    <p>이 앨범은 어떠세요?</p>
+                </div>
             }
             <Album decodedParams = {decodedParams} userdata={userdata} />
         </div>

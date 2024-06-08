@@ -19,9 +19,8 @@ export default async function MyPageAlbum(props :any){
       (e:string) => e !== (decodeURIComponent(params.title.replace('.mp3','')))
     )
     let albumArr :string[] = await checkDependency(userPlaylist)
-    console.log(albumArr)
 
-    if(!session) return <h1>로그인하라궁궁!!!</h1>
+    if(!session) return <h1 style={{textAlign:'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>
 
     if(session && albumArr !== undefined){
       return <DetailSong params={params} userdata={userdata} myPageComponent={true} albumArr={albumArr} />

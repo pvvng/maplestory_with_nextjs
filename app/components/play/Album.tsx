@@ -32,8 +32,8 @@ export default function Album({decodedParams, title, userdata} :PropsType){
     // aws에서 폴더 (앨범) 데이터 받아오기
     const { data :folder , isLoading :folderLoading, isError :folderError } = useQuery(['getFolder', decodedParams], () => fetchFolder(decodedParams));
 
-    if(folderLoading) return <h2>로딩중임</h2>
-    if(folderError) return <h2>에러남;</h2>
+    if(folderLoading) return <h2 style={{textAlign:'center'}}>로딩 중 입니다.</h2>
+    if(folderError) return <h2 style={{textAlign:'center'}}>에러가 발생했습니다.</h2>
     return(
         <div>
             {

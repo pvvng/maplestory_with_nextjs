@@ -41,8 +41,8 @@ export default function DetailSong({params, userdata, myPageComponent, albumArr 
   );
 
   // 예외처리
-  if (isLoading) return <h2>로딩중뿌잉</h2>;
-  if (isError) return <div>Error loading audio</div>;
+  if (isLoading) return <h1 style={{textAlign:'center'}}>로딩 중 입니다.</h1>;
+  if (isError) return <h1 style={{textAlign:'center'}}>에러가 발생했습니다.</h1>;
 
   if(audio !== undefined){
 

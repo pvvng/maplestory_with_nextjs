@@ -48,7 +48,6 @@ let GoPtag = styled.p`
 
 export default function SearchContainer({router, todayAlbums} :PropsType){
 
-  console.log(todayAlbums)
     // input 참조
     const inputRef = useRef<HTMLInputElement>(null);
     // input value 저장하기
@@ -88,9 +87,9 @@ export default function SearchContainer({router, todayAlbums} :PropsType){
               메이플 스토리 세계관 안의 다양한 지역을 검색하세요!
             </p>
             <p className="m-0">
-              시간의 신전, 엘나스, 아쿠아리움 등 다양한 지역을 베이스로 한 앨범이 존재합니다.
+              <strong>헤네시스</strong>, <strong>시간의 신전</strong> 등 다양한 지역을 베이스로 한 앨범이 존재합니다.
             </p>
-            <p>차원의 도서관, 블랙헤븐 등 특별한 앨범이 있습니다.</p>
+            <p><strong>차원의 도서관</strong>, <strong>블랙헤븐</strong> 등 메이플 스토리 세계관과 연결되는 특별한 앨범이 있습니다.</p>
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">

@@ -186,7 +186,9 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata} :PropsTy
             {
                 duration > 0?
                 <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
-                <p>로딩중임여</p>
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
             }
         </div>
     )

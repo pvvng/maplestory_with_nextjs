@@ -23,8 +23,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <head>
         	<title>메이뿡스토리</title>
         </head>
-        {/* 가로 스크롤바 없애놓음. 나중에 필요하면 꺼내셈 */}
-        <body style={{margin:'0px', boxSizing:'border-box', background:'black',}}>
+        <body style={{margin:'0px', boxSizing:'border-box'}}>
           <SessionProvider>
             <Provider store={store}>
               <QueryClientProvider client={queryClient}>

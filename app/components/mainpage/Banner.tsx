@@ -21,11 +21,10 @@ let BannerBox = styled.div`
   margin-left :auto;
   margin-right :auto;
   margin-top: 20px;
-  margin-bottom: 20px;
   padding : 30px;
   border-radius : 20px;
-  max-width : 1024px;
   background :white;
+  border : 0.5px solid #D2D2D2;
 `
 
 let InnerBox = styled.div`

@@ -16,7 +16,7 @@ export default async function Home() {
   }
 
   // 로그인하지 않았을때 보여주는 화면
-  return <h1>로그인 후 이용가능함ㅎ</h1>
+  return <h1 style={{textAlign: 'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>
 }
 
 

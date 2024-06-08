@@ -14,7 +14,7 @@ interface PropsType {
 export default function PlayList({ userdata, albumArr, decodedParams }: PropsType) {
   const router = useRouter();
   const [htmlPlaylist, setHtmlPlaylist] = useState<string[]>([]);
-
+  
   useEffect(() => {
     // userdata, decodedParams 업데이트 될때마다 새롭게 변경
     let newPlaylist: string[] = [];
@@ -34,7 +34,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
   }, [userdata, decodedParams]);
 
   if (htmlPlaylist.length === 0 && decodedParams === undefined) {
-    return <h2>플레이리스트가 비었다궁!!</h2>;
+    return <h1 style={{textAlign:'center'}}>플레이리스트가 비어있습니다.</h1>
   }
 
   return (
