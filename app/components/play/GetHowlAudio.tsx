@@ -7,6 +7,7 @@ import { setAutoPlayStatus, store } from '../../store';
 import { useAudioEffect, useAudioQuery } from '../../funcions/autoplay/useAlbumDataQuery';
 import { WithId, Document } from 'mongodb';
 import { playlistAutoPlay } from '../../funcions/autoplay/playlistAutoPlay';
+import RotateImage from './RotateImage';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -27,11 +28,16 @@ interface PropsType {
     audio : AudioObject,
     album : string,
     title : string,
+    imgUrl : ImgUrlType,
     albumArr ?: string[],
     userdata ?: WithId<Document> | undefined
 }
+
+interface ImgUrlType {
+    [key: string]: string;
+}
 // howler js로 howl 객체 생성하는 컴포넌트
-export function GetHowlAudio ({audio, album, title, albumArr, userdata} :PropsType){
+export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} :PropsType){
 
     let router = useRouter();
     let autoPlay = useSelector((state :RootState) => state.autoPlay)
@@ -152,46 +158,48 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata} :PropsTy
 
     return(
         <div>
-            {
-                !isPlaying ?
-                <button onClick={()=>{setIsPlaying(true)}}>재생</button>:
-                <button onClick={()=>{setIsPlaying(false)}}>일시정지</button>
-            }
-            {
-                isAutoPlay.current?
-                <button onClick={()=>{
-                    // 클릭시 오토플레이 종료, store에 오토플레이 상태 저장
-                    handleClick(false);
-                    dispatch(setAutoPlayStatus(false));
-                }}>오토플레이 종료</button>:
-                <button onClick={()=>{
-                    // 클릭시 오토플레이 시작, store에 오토플레이 상태 저장
-                    handleClick(true);
-                    dispatch(setAutoPlayStatus(true));
-                }}>오토플레이</button>
-            }
-            <div>
-                <span>볼륨 조절&nbsp;</span>
-                <input type='range' min="1" max="100" defaultValue="50" onChange={(e)=>{
-                    let nowVolume :number= parseInt(e.target.value)
-                    setVolume(nowVolume/100);
-                }}/>
-            </div>
-            
-            {/* progress bar */}
-            <div style={{width:'200px', height:'20px', marginTop:'10px', background:'#eee'}}>
-                <div style={{width: remainDuration + '%', height:'100%', background:'red'}}></div>
-            </div>
-
-            {
-                duration > 0?
-                <p>남은 오디오 길이 : {duration.toFixed(0)}</p>:
-                <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+            <RotateImage imgUrl={imgUrl} isPlaying={isPlaying} duration={duration} />
+            <div className='p-5' style={{textAlign:'center'}}>
+                {
+                    !isPlaying ?
+                    <button className='btn btn-primary mx-2' onClick={()=>{setIsPlaying(true)}}>재생</button>:
+                    <button className='btn btn-secondary mx-2' onClick={()=>{setIsPlaying(false)}}>일시정지</button>
+                }
+                {
+                    isAutoPlay.current?
+                    <button className='btn btn-secondary' onClick={()=>{
+                        // 클릭시 오토플레이 종료, store에 오토플레이 상태 저장
+                        handleClick(false);
+                        dispatch(setAutoPlayStatus(false));
+                    }}>오토플레이 종료</button>:
+                    <button className='btn btn-primary' onClick={()=>{
+                        // 클릭시 오토플레이 시작, store에 오토플레이 상태 저장
+                        handleClick(true);
+                        dispatch(setAutoPlayStatus(true));
+                    }}>오토플레이</button>
+                }
+                <div className='mt-5'>
+                    <span>볼륨 조절&nbsp;</span>
+                    <input type='range' min="1" max="100" defaultValue="50" style={{background :'black'}} onChange={(e)=>{
+                        let nowVolume :number= parseInt(e.target.value)
+                        setVolume(nowVolume/100);
+                    }}/>
                 </div>
-            }
+                
+                {/* progress bar */}
+                <div style={{width:'200px', height:'20px', marginTop:'30px', background:'#eee', marginLeft:'auto', marginRight:'auto'}}>
+                    <div style={{width: remainDuration + '%', height:'100%', background:'#0075FF'}}></div>
+                </div>
+
+                {
+                    duration > 0?
+                    <p>남은 오디오 : {duration.toFixed(0)} 초</p>:
+                    <div className="spinner-border mt-3" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                }
+
+            </div>
         </div>
     )
 }
-
-

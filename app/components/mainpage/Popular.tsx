@@ -17,7 +17,6 @@ let ContainerBox = styled.div`
   padding : 20px;
 `
 let TripBtn = styled.button`
-  font-size : 18px;
   border : none;
   background :none;
   &:hover{
@@ -49,7 +48,7 @@ export default function Popular({popularAlbums, image} :PropsType){
   return(
     <div style={{overflow:'hidden'}}>
       <ContainerBox >
-        <span className="fs-4 fw-bold">{popularAlbums.theme}</span>
+        <span className="fw-bold" style={{fontSize:'18px'}}>{popularAlbums.theme}</span>
         <TripBtn className="mx-2" onClick={()=>{
           let arrLength = popularAlbums.album.length;
           if (moveCounter >= 0 && moveCounter < arrLength - 3) {

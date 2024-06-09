@@ -41,14 +41,17 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
     <div>
       {
         htmlPlaylist.map((pl: string, i: number) => (
-          <div key={i}>
+          <div className='row' style={{width:'100%'}} key={i}>
             <span
+              className='col-9'
               style={{ cursor: 'pointer' }}
               onClick={(e) => {
                 let text = (e.target as HTMLSpanElement).textContent || "";
                 router.push('/mypage/' + albumArr[i] + '/' + text + '.mp3');
               }}>{pl}</span>
-            <SongHeartBtn userdata={userdata} componet={pl} />
+              <div className='col-3'>
+                <SongHeartBtn userdata={userdata} componet={pl} />
+              </div>
           </div>
         ))
       }

@@ -8,15 +8,20 @@ import SearchContainer from "./SearchContainer";
 import { faPlane, faCouch, faFire } from "@fortawesome/free-solid-svg-icons";
 import ThemeComponet from "./ThemeComponent";
 import Popular from "./Popular";
+import MiniMypage from "./MiniMypage";
+import { Document, WithId } from "mongodb";
 
-export default function MainPage ({userdata} :any){
+interface UserDataType {
+  userdata : WithId<Document> | undefined,
+  albumArr : string[]
+}
+
+export default function MainPage ({userdata, albumArr} :UserDataType){
   
   let router = useRouter();
 
   // 이미지 경로 aws에서 가져오기
-  const { data :image, isLoading , isError  } = useQuery( ['name'], () => fetchImages())
-
-  console.log(userdata)
+  const { data :image, isLoading , isError  } = useQuery( ['image'], () => fetchImages())
 
   if(isLoading) return <h1 style={{textAlign:'center'}}>로딩 중입니다.</h1>
   if(isError) return <h1 style={{textAlign:'center'}}>에러가 발생했습니다.</h1>
@@ -31,18 +36,13 @@ export default function MainPage ({userdata} :any){
           {/* 검색 */}
           <SearchContainer router={router} todayAlbums={todayAlbums} />
           {/* 플레이리스트 */}
-          <div className="card p-4 mt-3" style={{borderRadius:'10px',}}>123</div>  
+          <MiniMypage userdata={userdata} albumArr={albumArr} />
 
         </div>
         {/* 테마별 앨범 */}
 
         <div className="col-lg-8">
-          <div className="card p-4 mt-3" style={{borderRadius:'20px',}}>
-            <p className=" fs-3 fw-bold">🍁 테마별 추천 앨범</p>
-            <ThemeComponet themeAlbums={themeAlbums} image={image} />
-          </div>
-        </div>
-        <div className="col-lg-4">
+          <ThemeComponet themeAlbums={themeAlbums} image={image} />
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@ export default function MainPage ({userdata} :any){
     },
     { 
       album : '모험가 스토리', 
-      des : '메이플 스토리의 주인공, 모험가. 그들의 이야기를 감상해봐요. 🍁',
+      des : '메이플 스토리의 주인공, 모험가. 노래로 듣는 그들의 이야기. 🍁',
       url : "https://pvvng-maplemusic-storage.s3.ap-northeast-2.amazonaws.com/이미지/모험가 스토리.png"
     },
     { 

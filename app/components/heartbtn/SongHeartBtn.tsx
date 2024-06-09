@@ -22,7 +22,7 @@ export default function SongHeartBtn({userdata, componet} :PropsType){
 
 
   let [counter, setCounter] = useState(0);
-  let heartEmoji = [ '🖤', '❤️' ] ;
+  let heartEmoji = [ '🤍', '❤️' ] ;
   let [title, setTitle] = useState<string>('');
   let userPlaylist :string[] = [];
 

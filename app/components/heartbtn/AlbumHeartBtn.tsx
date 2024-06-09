@@ -36,7 +36,7 @@ export default function AlbumHeartBtn({folder, userdata, i} :PropsType){
       userPlaylist = JSON.parse(userdata.playlist);
   }
 
-  let heartEmoji = [ '🖤', '❤️' ] ;
+  let heartEmoji = [ '🤍', '❤️' ] ;
   let [lengthArr, setLengthArr] = useState([-1]);
 
   useEffect(()=>{

@@ -7,6 +7,9 @@ import Album from "@/app/components/play/Album";
 import { Document, WithId } from "mongodb";
 import SongHeartBtn from "@/app/components/heartbtn/SongHeartBtn";
 import PlayList from "../playlist/PlayList";
+import { useEffect, useState } from "react";
+import { fetchImages } from "@/app/funcions/fetch/fetchImages";
+import RotateImage from "./RotateImage";
 
 interface PropsType {
   params : ParamsType,
@@ -21,6 +24,7 @@ interface ParamsType {
   album :string,
   title :string
 }
+
 
 export default function DetailSong({params, userdata, myPageComponent, albumArr = []} :PropsType){
 
@@ -40,30 +44,57 @@ export default function DetailSong({params, userdata, myPageComponent, albumArr 
     () => fetchAudio(fetchQuery)
   );
 
+  let [imgUrl, setImgUrl] = useState<{[key :string] :string}>({});
+
+  // 이미지 경로 aws에서 가져오기
+  const { data :image, isLoading:imageLoading , isError:imageError  } = useQuery( ['image'], () => fetchImages())
+
+  // 이미지 설정
+  useEffect(()=>{
+      if(image !== undefined){
+          image.images.map((img:{[key :string] :string}) => {
+              if(img.key.includes(decodedParams.album)){
+                  setImgUrl(img);
+              }
+          })
+      }
+  },[image])
+
   // 예외처리
-  if (isLoading) return <h1 style={{textAlign:'center'}}>로딩 중 입니다.</h1>;
-  if (isError) return <h1 style={{textAlign:'center'}}>에러가 발생했습니다.</h1>;
+  if (isLoading  || imageLoading) return <h1 style={{textAlign:'center'}}>로딩 중 입니다.</h1>;
+  if (isError || imageError) return <h1 style={{textAlign:'center'}}>에러가 발생했습니다.</h1>;
 
   if(audio !== undefined){
-
+    //  노래 플레이 위치에 따라서 조건부 렌더링
     return (
       <div>
-        <h2>Song</h2>
-        <span style={{fontWeight:'bold'}}>{title}</span>
-        <SongHeartBtn userdata={userdata} />
-        <h4>{decodedParams.album}</h4>
-        {
-          !myPageComponent?
-          <div>
-            <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} />
-            <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />
+        <div className="row" style={{width : '100%'}}>
+          <div className="col-lg-6">
+            <div className="p-5" style={{textAlign:'center'}}>
+              {/* 노래 정보 */}
+              <p className="fs-3 fw-bold">{decodedParams.album}</p>
+              <div style={{marginBottom:'50px'}}>
+                <span className="fs-5" style={{fontWeight:'bold'}}># {title}</span>
+                <SongHeartBtn userdata={userdata} />
+              </div>
+              {
+                !myPageComponent?
+                <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} imgUrl={imgUrl} />:
+                <GetHowlAudio audio={audio} album={decodedParams.album} title={title} albumArr={albumArr} userdata={userdata} imgUrl={imgUrl}  />
+              }
+            </div>
           </div>
-          :
-          <div>
-            <GetHowlAudio audio={audio} album={decodedParams.album} title={title} albumArr={albumArr} userdata={userdata}  />
-            <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+          <div className="col-lg-6">
+            {/* 앨범 리스트 상하정렬하는 div */}
+            {/* <div style={{display:'flex', alignItems:'center', height:'100%'}}> */}
+              {
+                !myPageComponent?
+                <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />:
+                <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+              }
+            {/* </div> */}
           </div>
-        }
+        </div>
       </div>
     );
   }

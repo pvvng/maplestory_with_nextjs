@@ -76,10 +76,10 @@ export default async function AlbumPage(props :any){
                 urlOk?
                 null:
                 isFound?
-                <p>이걸 찾으셨나요? &nbsp; 
+                <p style={{margin:'20px'}}>이걸 찾으셨나요? &nbsp; 
                     <span style={{textDecorationLine:'underline', color:'blue'}}>{decodedParams}</span>
                 </p> :
-                <div>
+                <div style={{margin:'20px'}}>
                     <p>검색 결과가 없습니다.</p>
                     <p>이 앨범은 어떠세요?</p>
                 </div>
