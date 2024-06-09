@@ -141,14 +141,18 @@ export default function Album({decodedParams, title, userdata} :PropsType){
                     {
                         folder.map( (f :S3Object, i:number) => {
                             let albumName :string = (f.Key.split('.')[0].split('/')[1]);
+                            // 재생중인 음원은 배제
+                            let playBGColor = '';
+                            let playTextColor = '';
                             if(albumName === title){
-                                return null
+                                playBGColor = 'black';
+                                playTextColor = 'white';
                             }
                             return (
-                                <ListContainer className="row" key={i}>
+                                <ListContainer className="row" style={{background:playBGColor, color:playTextColor}} key={i}>
                                     <span
                                         className="col-9"
-                                        style={{cursor:'pointer'}} 
+                                        style={{cursor:'pointer', }} 
                                         onClick={()=>{
                                             router.push('/album/' + f.Key);
                                         }}>

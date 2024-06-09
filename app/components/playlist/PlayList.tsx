@@ -91,10 +91,10 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
       newPlaylist = [...parsedPlaylist];
     }
 
-    if (decodedParams !== undefined) {
-      // decodedParams가 주어진 경우 해당 곡을 플레이리스트에서 필터링하여 제거
-      newPlaylist = newPlaylist.filter((e: string) => e + '.mp3' !== decodedParams.title);
-    }
+    // if (decodedParams !== undefined) {
+    //   // decodedParams가 주어진 경우 해당 곡을 플레이리스트에서 필터링하여 제거
+    //   newPlaylist = newPlaylist.filter((e: string) => e + '.mp3' !== decodedParams.title);
+    // }
 
     // 새로운 플레이리스트를 상태에 반영
     setHtmlPlaylist(newPlaylist);
@@ -121,8 +121,18 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
 
       </div>
       {
-        htmlPlaylist.map((pl: string, i: number) => (
-          <ListContainer className='row' style={{width:'100%'}} key={i}>
+        htmlPlaylist.map((pl: string, i: number) => {
+          // 현재 재생 중인 음악 폰트 색 변경
+          let playBGColor = '';
+          let playTextColor = '';
+          if(decodedParams !== undefined ){
+            if(decodedParams.title.includes(pl)){
+              playBGColor = 'black';
+              playTextColor = 'white';
+            }
+          }
+          return(
+          <ListContainer className='row' style={{width:'100%', background: playBGColor, color: playTextColor}} key={i}>
             <span
               className='col-9'
               style={{ cursor: 'pointer' }}
@@ -134,7 +144,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
                 <SongHeartBtn userdata={userdata} componet={pl} />
               </div>
           </ListContainer>
-        ))
+        )})
       }
     </div>
   );
