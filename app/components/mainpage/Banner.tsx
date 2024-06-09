@@ -83,8 +83,8 @@ export default function Banner({bannerContainer} :PropsType){
   return(
     <BannerBox>
       <div className='row'>
-        <InnerBox className="col-6">
-          <img src={bannerContainer[bannerNum].url} alt={bannerContainer[bannerNum].album} width={'100%'}  />
+        <InnerBox className="col-6" style={{textAlign:'center'}}>
+          <img style={{maxWidth:'480px'}} src={bannerContainer[bannerNum].url} alt={bannerContainer[bannerNum].album} width={'100%'}  />
         </InnerBox>
         <InnerBox className="col-6">
           <div style={{marginTop:'auto', marginBottom:'auto'}}>

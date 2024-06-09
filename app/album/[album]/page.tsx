@@ -2,6 +2,7 @@ import { connectDB } from "@/util/database";
 import Album from "../../components/play/Album";
 import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
 import getDBuserdata from "@/app/funcions/fetch/getDBuserdata";
+import SiginForm from "@/app/components/SiginTools/SignForm";
 
 export default async function AlbumPage(props :any){
 
@@ -65,6 +66,11 @@ export default async function AlbumPage(props :any){
         // 유사어를 아예 찾지 못했을 때 (findSimilarWord에서 ''이 반환될 때)
         decodedParams = "메이플스토리 M"
         isFound = false
+    }
+
+    // 로그인은 했으나, 회원가입이 되지 않은 경우
+    if(session && !isExist){
+        return <SiginForm session={session} />
     }
 
     // 로그인 x시 예외처리

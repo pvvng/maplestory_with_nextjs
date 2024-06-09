@@ -70,9 +70,12 @@ export default function AlbumHeartBtn({folder, userdata, i} :PropsType){
             temp[i] = temp[i] + 1;
             setLengthArr([...temp]);
   
-            // 현재 클릭한 부분(하트)의 형제 요소 중 노래 이름 저장하기
+            // 현재 클릭한 부분(하트)의 부모의 형제 요소 중 노래 이름 저장하기
             const target = e.target as HTMLElement;
-            let clickSong = target.previousSibling?.textContent || '';
+            let clickSong = ''
+            if(target.parentElement){
+              clickSong = target.parentElement.previousSibling?.textContent || '';
+            }
   
             // 클릭한 횟수에 따라 플레이리스트 저장 or 삭제 달라지게
             // 클릭한 횟수에 따라 하트 색 변경

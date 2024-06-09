@@ -36,8 +36,6 @@ export default function MiniMypage({userdata, albumArr} :PropsType){
 
     return (
       <CardContainer>
-        <p className="fw-bold" style={{fontSize:'18px'}}>{userName}의 플레이리스트</p>
-        <hr/>
         <PlayList userdata={userdata} albumArr={albumArr} />
 
         <div style={{textAlign:'right'}}>

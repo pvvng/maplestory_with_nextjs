@@ -1,0 +1,19 @@
+{
+  "bannerContainer": [
+    {
+      "album": "엔젤릭버스터",
+      "des": "메이플 스토리의 아이돌, 엔젤릭버스터의 화려한 컴백! 🌟",
+      "url": "https://pvvng-maplemusic-storage.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%97%94%EC%A0%A4%EB%A6%AD%EB%B2%84%EC%8A%A4%ED%84%B0.png"
+    },
+    {
+      "album": "모험가 스토리",
+      "des": "메이플 스토리의 주인공, 모험가. 노래로 듣는 그들의 이야기. 🍁",
+      "url": "https://pvvng-maplemusic-storage.s3.ap-northeast-2.amazonaws.com/이미지/모험가 스토리.png"
+    },
+    {
+      "album": "설원의 음유시인",
+      "des": "설원의 눈보라에 흩날려 사라진 이야기 속으로 들어갈 준비가 되셨나요?",
+      "url": "https://pvvng-maplemusic-storage.s3.ap-northeast-2.amazonaws.com/이미지/설원의 음유시인.png"
+    }
+  ]
+}

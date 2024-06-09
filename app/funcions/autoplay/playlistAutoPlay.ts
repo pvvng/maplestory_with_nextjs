@@ -21,7 +21,6 @@ export function playlistAutoPlay(userdata :any, title :any, albumArr :any, nextA
         }
       })
     }
-    console.log(next)
 
     nextAudioRef.current = next
   }

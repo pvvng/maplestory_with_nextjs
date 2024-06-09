@@ -146,14 +146,14 @@ export default function Album({decodedParams, title, userdata} :PropsType){
                             }
                             return (
                                 <ListContainer className="row" key={i}>
-                                    <GoSpan 
+                                    <span
                                         className="col-9"
                                         style={{cursor:'pointer'}} 
                                         onClick={()=>{
                                             router.push('/album/' + f.Key);
                                         }}>
                                         {albumName}
-                                    </GoSpan>
+                                    </span>
                                     <div className="col-3" style={{textAlign:'right'}}>
                                         <AlbumHeartBtn folder={folder} userdata={userdata} i={i} />
                                     </div>
