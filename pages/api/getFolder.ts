@@ -4,8 +4,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req :NextApiRequest, res :NextApiResponse) {
 
     const accessKey = process.env.NETLIFY_AWS_ACCESS_KEY;
-    const secretKey  = process.env.AWS_SECRET_KEY;
-    const bucketName = process.env.AWS_BUCKET_NAME;
+    const secretKey  = process.env.NETLIFY_AWS_SECRET_KEY;
+    const bucketName = process.env.NETLIFY_AWS_BUCKET_NAME;
 
     if (accessKey === undefined || secretKey  === undefined || bucketName  === undefined){
         throw new Error('키 에러 발생');

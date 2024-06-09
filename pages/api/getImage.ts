@@ -4,12 +4,12 @@ import AWS from 'aws-sdk';
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.NETLIFY_AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
+  secretAccessKey: process.env.NETLIFY_AWS_SECRET_KEY,
   region: 'ap-northeast-2',
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const bucketName = process.env.AWS_BUCKET_NAME;
+  const bucketName = process.env.NETLIFY_AWS_BUCKET_NAME;
   const folderName = '이미지';
 
   if (!bucketName) {
