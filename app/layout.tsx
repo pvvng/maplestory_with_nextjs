@@ -30,6 +30,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     <html>
         <head>
         	<title>Storify</title>
+          <link rel='manifest' href='/manifest.json' />
         </head>
         <body style={{margin:'0px', boxSizing:'border-box'}}>
           <SessionProvider>
