@@ -7,21 +7,28 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      authorization: {
+        params: {
+          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/google`
+        }
+      }
     }),
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+      authorization: {
+        params: {
+          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/github`
+        }
+      }
     }),
   ],
   secret : process.env.SOCIAL_LOGIN_SECRET,
   callbacks: {
-    async redirect({ url, baseUrl } :{url:any, baseUrl:any}) {
-      // Ensure the URL is relative to the base URL
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Otherwise, ensure it is the same origin URL
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+    async redirect({ url, baseUrl } : { url :string, baseUrl:string}) {
+      // 외부 URL 리디렉션을 허용하지 않으려면 이 콜백을 사용자 정의합니다.
+      return url.startsWith(baseUrl) ? url : baseUrl
     }
-  }
+  },
 };
 export default NextAuth(authOptions); 
