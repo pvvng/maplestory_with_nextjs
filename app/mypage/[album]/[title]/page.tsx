@@ -30,7 +30,7 @@ export default async function MyPageAlbum(props :any){
 
     if(session && albumArr !== undefined){
       return (
-        <div className="p-5">
+        <div className="p-md-5">
           <DetailSong params={params} userdata={userdata} myPageComponent={true} albumArr={albumArr} />
         </div>
     )

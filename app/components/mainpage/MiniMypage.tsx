@@ -11,7 +11,7 @@ interface PropsType {
 
 let CardContainer = styled.div`
   width : 100%;
-  padding : 30px;
+  padding : 10px;
   border-radius :10px;
   margin-top : 30px;
   border : 1px solid #D2D2D2;
@@ -31,9 +31,6 @@ export default function MiniMypage({userdata, albumArr} :PropsType){
   let router = useRouter();
 
   if(userdata !== undefined){
-    let userName = userdata.name;
-    let userPlaylist = JSON.parse(userdata.playlist);
-
     return (
       <CardContainer>
         <PlayList userdata={userdata} albumArr={albumArr} />

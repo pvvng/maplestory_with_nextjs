@@ -127,18 +127,18 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
             }
           }
           return(
-          <ListContainer className='row' style={{width:'100%', background: playBGColor, color: playTextColor}} key={i}>
-            <span
-              className='col-9'
-              style={{ cursor: 'pointer' }}
-              onClick={(e) => {
-                let text = (e.target as HTMLSpanElement).textContent || "";
-                router.push('/mypage/' + albumArr[i] + '/' + text + '.mp3');
-              }}>{pl}</span>
-              <div className='col-3' style={{textAlign:'right'}}>
-                <SongHeartBtn userdata={userdata} componet={pl} />
-              </div>
-          </ListContainer>
+            <ListContainer className='row mt-3' style={{width:'100%', background: playBGColor, color: playTextColor}} key={i}>
+              <span
+                className='col-9'
+                style={{ cursor: 'pointer'}}
+                onClick={(e) => {
+                  let text = (e.target as HTMLSpanElement).textContent || "";
+                  router.push('/mypage/' + albumArr[i] + '/' + text + '.mp3');
+                }}>{pl}</span>
+                <div className='col-3' style={{textAlign:'right'}}>
+                  <SongHeartBtn userdata={userdata} componet={pl} />
+                </div>
+            </ListContainer>
         )})
       }
     </div>
