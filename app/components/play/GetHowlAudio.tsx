@@ -157,6 +157,7 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
             src: [audio.audioUrl],
             format: ['mp3'],
             volume: 0.5,
+            html5: true, // 모바일 기기에서 HTML5 Audio를 사용하도록 설정
             // howl 객체 로드 완료시 음원 길이 상태에 저장
             onload: () => {
                 setDuration(sound.duration());

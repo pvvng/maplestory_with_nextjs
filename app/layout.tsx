@@ -26,6 +26,11 @@ const ImageContainer = styled.div`
 // store 타입 지정
 export type RootState = ReturnType<typeof store.getState>
 
+export const metadata = {
+  title: 'Stringify',
+  description: '메이플 BGM/OST 웹 플레이어',
+};
+
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html>

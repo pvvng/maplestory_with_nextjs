@@ -98,4 +98,18 @@ define(['./workbox-e43f5367'], (function (workbox) { 'use strict';
   }), 'GET');
 
 }));
+
+self.addEventListener('install', (event) => {
+  console.log('Service Worker installing.');
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating.');
+});
+
+self.addEventListener('fetch', (event) => {
+  console.log('Fetching:', event.request.url);
+});
+
+
 //# sourceMappingURL=sw.js.map
