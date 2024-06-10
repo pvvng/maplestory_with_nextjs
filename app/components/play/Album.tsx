@@ -84,11 +84,6 @@ let ListContainer = styled.div`
     }
 
 `
-let GoSpan = styled.div`
-    &:hover{
-        color :  #CC0000;
-    }
-`
 
 export default function Album({decodedParams, title, userdata} :PropsType){
 

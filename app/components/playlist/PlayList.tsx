@@ -63,11 +63,6 @@ let ListContainer = styled.div`
     }
 
 `
-let GoSpan = styled.div`
-    &:hover{
-        color :  #CC0000;
-    }
-`
 
 export default function PlayList({ userdata, albumArr, decodedParams }: PropsType) {
   const router = useRouter();
@@ -126,7 +121,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
           let playBGColor = '';
           let playTextColor = '';
           if(decodedParams !== undefined ){
-            if(decodedParams.title.includes(pl)){
+            if(decodedParams.title === (pl) + '.mp3'){
               playBGColor = 'black';
               playTextColor = 'white';
             }
