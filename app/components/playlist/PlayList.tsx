@@ -100,7 +100,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
   }
 
   return (
-    <div style={{alignItems:'center'}}>
+    <div className="mt-3" style={{alignItems:'center'}}>
       <div>
         <BlurredBackground className='mb-4' image = {userIcon}>
           <div className="row"  style={{alignItems:'center'}}>
@@ -127,7 +127,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
             }
           }
           return(
-            <ListContainer className='row mt-3' style={{width:'100%', background: playBGColor, color: playTextColor}} key={i}>
+            <ListContainer className='row' style={{width:'100%', background: playBGColor, color: playTextColor}} key={i}>
               <span
                 className='col-9'
                 style={{ cursor: 'pointer'}}
