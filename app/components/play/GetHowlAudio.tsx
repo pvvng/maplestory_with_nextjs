@@ -192,10 +192,12 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
           });
           
           navigator.mediaSession.setActionHandler('play', () => {
+            setIsPlaying(true);
             sound.play();
           });
           
           navigator.mediaSession.setActionHandler('pause', () => {
+            setIsPlaying(false);
             sound.pause();
           });
 
