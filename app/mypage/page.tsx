@@ -25,12 +25,12 @@ export default async function MyPage(){
     // user가 저장한 플레이리스트의 의존성 확인
     let albumArr :string[] = await checkDependency(userPlaylist)
 
-    if (session && albumArr !== undefined) {
+    // if (session && albumArr !== undefined) {
       return (
-        <div className="p-5">
+        <div className="p-md-5">
           <PlayList userdata={userdata} albumArr={albumArr} />
         </div>
       )  
-    }
+    // }
   }
 }

@@ -31,7 +31,7 @@ let RotateContainer = styled(({ isRotating, ...rest }: { isRotating: boolean } &
 export default function RotateImage({imgUrl, isPlaying, duration} :PropsType){
 
   return(
-    <div style={{width: '90%', marginLeft:'auto', marginRight:'auto', maxWidth:'480px', border:'1px solid #D2D2D2', borderRadius:'1000px'}}>
+    <div style={{width: '80%', marginLeft:'auto', marginRight:'auto', maxWidth:'360px', border:'1px solid #D2D2D2', borderRadius:'1000px'}}>
       <RotateContainer isRotating={isPlaying && duration > 0} src = {imgUrl.url} alt={imgUrl.key} width = '100%' />
     </div>
   )

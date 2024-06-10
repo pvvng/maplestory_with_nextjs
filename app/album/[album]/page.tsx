@@ -68,7 +68,7 @@ export default async function AlbumPage(props :any){
         isFound = false
     }
 
-    // 로그인은 했으나, 회원가입이 되지 않은 경우
+    // // 로그인은 했으나, 회원가입이 되지 않은 경우
     if(session && !isExist){
         return <SiginForm session={session} />
     }

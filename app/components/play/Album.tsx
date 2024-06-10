@@ -62,7 +62,6 @@ let BlurredBackground = styled.div<{image : string}> `
 `
 
 let CardContainer = styled.div`
-    padding : 50px;
     align-items : center;
 `
 
@@ -115,7 +114,7 @@ export default function Album({decodedParams, title, userdata} :PropsType){
         <div>
             {
                 folder !== undefined && folder.length !== 0?
-                <CardContainer>
+                <CardContainer className="p-md-5 mt-3">
 
                     <div>
                         <BlurredBackground image = {imgUrl.url}>

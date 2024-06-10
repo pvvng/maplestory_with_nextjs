@@ -25,7 +25,6 @@ interface ParamsType {
   title :string
 }
 
-
 export default function DetailSong({params, userdata, myPageComponent, albumArr = []} :PropsType){
 
   // params 디코딩
@@ -68,15 +67,9 @@ export default function DetailSong({params, userdata, myPageComponent, albumArr 
     //  노래 플레이 위치에 따라서 조건부 렌더링
     return (
       <div>
-        <div className="row" style={{width : '100%'}}>
+        <div className="row" style={{width : '100%', marginLeft:'auto', marginRight:'auto'}}>
           <div className="col-lg-6">
-            <div className="p-5" style={{textAlign:'center'}}>
-              {/* 노래 정보 */}
-              <p className="fs-3 fw-bold">{decodedParams.album}</p>
-              <div style={{marginBottom:'50px'}}>
-                <span className="fs-5" style={{fontWeight:'bold'}}># {title}</span>
-                <SongHeartBtn userdata={userdata} />
-              </div>
+            <div className="p-md-5" style={{textAlign:'center'}}>
               {
                 !myPageComponent?
                 <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} imgUrl={imgUrl} />:
