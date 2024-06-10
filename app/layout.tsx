@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import { SessionProvider } from 'next-auth/react';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './font.css'
 
 const queryClient = new QueryClient();
 
