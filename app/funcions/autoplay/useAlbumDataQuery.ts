@@ -7,7 +7,6 @@ import { fetchFolder } from '../fetch/fetchAWS';
 export const useAudioEffect = (folder: any, title :any, nextAudioRef :any) => {
   useEffect(() => {
     // folder에 대한 useEffect 내용 작성
-    
     if(folder !== undefined){
       let nowPlay :number = -1;
       folder.map ((d :{[key:string]:string}, i:number) => {
@@ -19,8 +18,8 @@ export const useAudioEffect = (folder: any, title :any, nextAudioRef :any) => {
       if(nextplay >= folder.length){
           nextplay = 0;
       }
-      let pointRemove = (folder[nextplay].Key).substring(0, (folder[nextplay].Key).lastIndexOf("."))
-      let next = pointRemove.slice((pointRemove).indexOf("/") + 1)
+
+      let next = ('/album/' + folder[nextplay].Key)
       nextAudioRef.current = next;
     }
   }, [folder]);

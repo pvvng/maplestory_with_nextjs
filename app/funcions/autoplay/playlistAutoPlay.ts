@@ -2,32 +2,17 @@
 
 export function playlistAutoPlay(userdata :any, title :any, albumArr :any, nextAudioRef :any){
   if(userdata!== undefined){
-    let newAlbumArr :string[] = []
     let next :string = ''
     const parsedPlaylist = JSON.parse(userdata.playlist)
     parsedPlaylist.map((up:string, i:number) => {
       if (title === up){
-        newAlbumArr = insertAtIndex(albumArr as string[], i, 'playing')
+        if(i === parsedPlaylist.length - 1){
+          next = '/mypage/' + albumArr[0] + '/' + parsedPlaylist[0] + '.mp3'
+        }else{
+          next = '/mypage/' + albumArr[i+1] + '/' + parsedPlaylist[i+1] + '.mp3'
+        }
       }
     })
-    if(newAlbumArr !== undefined){
-      newAlbumArr.map((naa:string, i:number) => {
-        if(naa === 'playing'){
-          if(i === newAlbumArr.length - 1){
-            next = '/mypage/' + newAlbumArr[0] + '/' + parsedPlaylist[0] + '.mp3'
-          }else{
-            next = '/mypage/' + newAlbumArr[i+1] + '/' + parsedPlaylist[i+1] + '.mp3'
-          }
-        }
-      })
-    }
-
     nextAudioRef.current = next
   }
-}
-
-function insertAtIndex<T>(array: T[], index: number, element: T): T[] {
-  const newArray = [...array]; // 원본 배열 복사
-  newArray.splice(index, 0, element); // 인덱스 위치에 요소 삽입
-  return newArray; // 변경된 배열 반환
 }

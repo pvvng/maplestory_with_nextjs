@@ -149,7 +149,7 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
         const {folder, isLoading, isError} = useAudioQuery(album);
         useAudioEffect(folder, title, nextAudioRef);
     }
-    
+
     // 최초 마운트 시 실행
     useEffect(()=>{
         const sound :Howl = new Howl({
@@ -171,7 +171,7 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
                         router.push(nextAudioRef.current)
                     }else{
                         // 유저가 일반 앨범 재생 중일 경우 아래 경로로 라우팅
-                        router.push('/album/' + album + '/' + nextAudioRef.current + '.mp3');
+                        router.push( nextAudioRef.current );
                     }
                 }
             }

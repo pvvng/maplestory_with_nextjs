@@ -22,7 +22,6 @@ export default async function MyPage(){
   // 사용중인 유저가 회원가입이 완료되어있고, userdata를 받았을때
   if(userdata !== undefined){
     let userPlaylist = JSON.parse(userdata.playlist);
-    console.log(userPlaylist)
     // user가 저장한 플레이리스트의 의존성 확인
     let albumArr :string[] = await checkDependency(userPlaylist)
 
