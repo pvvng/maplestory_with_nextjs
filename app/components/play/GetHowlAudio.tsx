@@ -11,7 +11,6 @@ import RotateImage from './RotateImage';
 import styled from 'styled-components';
 import { faArrowRight, faArrowsRotate, faPause, faPlay, faVolumeHigh, faVolumeLow, faVolumeOff, faVolumeXmark, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SongHeartBtn from '../heartbtn/SongHeartBtn';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -219,7 +218,6 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
                 setDuration(pre => pre - 1);
                 // 남은 음원 길이가 0 이하일때
                 if (parseInt(duration.toFixed(0)) === 1){
-                    console.log('end')
                     clearTimeout(timer);
                     // 남은 음원 길이 기존 음원 길이로 재설정
                     setDuration(storedDuration)
@@ -252,7 +250,6 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
 
     return(
         <div className='mt-3'>
-
             {/* 상단 div box */}
             <AudioBox style={{width:'80%', color:'white'}}>
                 {/* 노래 정보 */}
@@ -260,10 +257,9 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
                 {/* 세트메뉴임 */}
                 <div>
                     <span className="fs-md-5"># {title}</span>
-                    <SongHeartBtn userdata={userdata} />
+                    {/* <SongHeartBtn userdata={userdata} /> */}
                 </div>
             </AudioBox>
-
             {/* 하단 div 박스 */}
             <AudioBox className='row' style={{width:'100%', background:'white'}}>
                 {/* 재생시 돌아가는 앨범 커버 */}

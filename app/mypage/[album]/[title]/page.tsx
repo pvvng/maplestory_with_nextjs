@@ -21,9 +21,7 @@ export default async function MyPageAlbum(props :any){
 
   if(userdata !== undefined){
     let userPlaylist = JSON.parse(userdata.playlist);
-    userPlaylist = userPlaylist.filter(
-      (e:string) => e !== (decodeURIComponent(params.title.replace('.mp3','')))
-    )
+ 
     let albumArr :string[] = await checkDependency(userPlaylist)
 
     if(!session) return <h1 style={{textAlign:'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>

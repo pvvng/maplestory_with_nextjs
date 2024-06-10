@@ -5,11 +5,9 @@ import { useQuery } from "react-query";
 import { GetHowlAudio } from "@/app/components/play/GetHowlAudio";
 import Album from "@/app/components/play/Album";
 import { Document, WithId } from "mongodb";
-import SongHeartBtn from "@/app/components/heartbtn/SongHeartBtn";
 import PlayList from "../playlist/PlayList";
 import { useEffect, useState } from "react";
 import { fetchImages } from "@/app/funcions/fetch/fetchImages";
-import RotateImage from "./RotateImage";
 
 interface PropsType {
   params : ParamsType,
