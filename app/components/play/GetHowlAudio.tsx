@@ -178,29 +178,6 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
             }
         });
 
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: album,
-            album: title,
-            artwork: [
-              { src: imgUrl.url, sizes: '96x96', type: 'image/png' },
-              { src: imgUrl.url, sizes: '128x128', type: 'image/png' },
-              { src: imgUrl.url, sizes: '192x192', type: 'image/png' },
-              { src: imgUrl.url, sizes: '256x256', type: 'image/png' },
-              { src: imgUrl.url, sizes: '384x384', type: 'image/png' },
-              { src: imgUrl.url, sizes: '512x512', type: 'image/png' },
-            ],
-          });
-          
-          navigator.mediaSession.setActionHandler('play', () => {
-            setIsPlaying(true);
-            sound.play();
-          });
-          
-          navigator.mediaSession.setActionHandler('pause', () => {
-            setIsPlaying(false);
-            sound.pause();
-          });
-
         // howl 객체 상태에 저장
         setHowlAudio(sound);
 
