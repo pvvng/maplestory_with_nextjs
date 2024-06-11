@@ -54,13 +54,13 @@
 
 - ##### Next.js로 제작한 게임 "메이플스토리"의 BGM/OST 웹 플레이어입니다.
 
-- ##### typescript
+- ##### Typescript
 
-- ##### react-query
+- ##### React-Query
 
-- ##### redux-toolkit
+- ##### Redux-Toolkit
 
-- ##### styled-components
+- ##### Styled-Components
  
 - ##### PWA
     - 모바일 환경에서도 이 프로젝트를 실행하는 것은 물론 실제 게임처럼 사용자 PC / 모바일 환경에 다운도 가능하게 만들고 싶었습니다. 이에 최적화된 기능은 PWA라고 생각합니다. PWA를 활용하여 네이티브 앱처럼 구동하는 웹을 제작하였습니다.
