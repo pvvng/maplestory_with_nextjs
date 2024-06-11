@@ -27,11 +27,8 @@ export default async function MyPageAlbum(props :any){
     if(!session) return <h1 style={{textAlign:'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>
 
     if(session && albumArr !== undefined){
-      return (
-        <div className="p-md-5">
-          <DetailSong params={params} userdata={userdata} myPageComponent={true} albumArr={albumArr} />
-        </div>
-    )
+      return <DetailSong params={params} userdata={userdata} myPageComponent={true} albumArr={albumArr} />
+
     }
   }
 }
