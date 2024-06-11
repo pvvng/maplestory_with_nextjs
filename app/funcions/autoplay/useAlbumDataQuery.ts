@@ -6,9 +6,9 @@ import { fetchFolder } from '../fetch/fetchAWS';
 
 export const useAudioEffect = (folder: any, title :any, nextAudioRef :any) => {
   useEffect(() => {
-    // folder에 대한 useEffect 내용 작성
     if(folder !== undefined){
       let nowPlay :number = -1;
+      // 받은 폴더 데이터 가공
       folder.map ((d :{[key:string]:string}, i:number) => {
           if(d.Key.includes(title)){
               nowPlay = i

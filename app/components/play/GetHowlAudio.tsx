@@ -103,13 +103,8 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
                 setIsPlaying(false);
                 setDuration(sound.duration());
                 if(isAutoPlay.current){
-                    if(userdata !== undefined){
-                        // 유저가 플레이리스트 재생 중일 경우 아래 경로로 라우팅
-                        router.push(nextAudioRef.current);
-                    }else{
-                        // 유저가 일반 앨범 재생 중일 경우 아래 경로로 라우팅
-                        router.push( nextAudioRef.current );
-                    }
+                    // 유저가 오토플레이 중일 경우 아래 경로로 라우팅
+                    router.push( nextAudioRef.current );
                 }
             }
         });

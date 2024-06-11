@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
 
 // 앨범명이 저장된 json 파일의 데이터를 받아오는 함수
 export const fetchAlbums = async () => {
