@@ -31,7 +31,7 @@
 ## 2. 개요
 - 프로젝트 이름 : 메이플스토리 BGM/OST 웹플레이어 - 🍁Storify🍁
 - 개발 기간 : 2024.06.04 ~ 2024.06.11
-- 개발 환경 : Next.js, typescript, AWS, mongoDB
+- 개발 환경 : Next.js, Typescript, AWS S3 bucket, mongoDB
 - 작업 관리 : Git (GitFlow)
 - 배포 : Netlify
 - #### installed Library
@@ -54,13 +54,15 @@
 
 - ##### Next.js로 제작한 게임 "메이플스토리"의 BGM/OST 웹 플레이어입니다.
 
-- ##### Typescript
+- ##### Typescript로 타입 에러 제어
 
-- ##### React-Query
+- ##### React-Query를 활용한 비동기 통신 상태 관리
 
-- ##### Redux-Toolkit
+- ##### Redux-Toolkit을 이용한 전역적 상태 관리
 
-- ##### Styled-Components
+- ##### Styled-Components 를 활용한 css-in-js
+
+- ##### Google && Github 소셜 로그인
  
 - ##### PWA
     - 모바일 환경에서도 이 프로젝트를 실행하는 것은 물론 실제 게임처럼 사용자 PC / 모바일 환경에 다운도 가능하게 만들고 싶었습니다. 이에 최적화된 기능은 PWA라고 생각합니다. PWA를 활용하여 네이티브 앱처럼 구동하는 웹을 제작하였습니다.
