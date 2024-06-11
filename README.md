@@ -7,8 +7,7 @@
 <details>
   <summary>window 환경에서 설치하기</summary>
   <div align = 'center'>
-    <img src='https://github.com/pvvng/pvvng.github.io/assets/112927193/85f131a5-41ae-496e-aa15-5db551236de4' width='33%' />
-    <img src='https://github.com/pvvng/pvvng.github.io/assets/112927193/34e7f2a3-dbcd-484a-8136-89aff62374d1' width='33%' />
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/da2207fa-07f6-41d9-a277-42125861811a' width='49%' />
   </div>
 </details>
 
@@ -97,6 +96,8 @@
 - ##### Howler.js를 사용한 오디오 플레이어
   - <audio> 태그 대신 Howler.js를 선택한 이유 중 하나는 Howler 라이브러리가 모바일 환경에서 화면이 종료되어도 음원 재생이 가능한 것입니다. PWA로 progressive webapp 을 만드려고 했기에 이는 좋은 선택지가 되리라 판단했습니다.
   - [Howler.js로 오디오 플레이어 만들기](https://velog.io/@pvvng/Howler.js%EB%A1%9C-%EB%AE%A4%EC%A7%81-%ED%94%8C%EB%A0%88%EC%9D%B4%EC%96%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+ 
+- ##### Axios와 React-Query를 활용한 HTTP 비동기 통신
 
 - ### 5-2. 프로젝트 중 어려웠던 부분 && 프로젝트의 아쉬운 부분
 
