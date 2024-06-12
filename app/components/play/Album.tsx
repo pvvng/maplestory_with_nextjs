@@ -120,7 +120,7 @@ export default function Album({decodedParams, title, userdata} :PropsType){
                         <BlurredBackground image = {imgUrl.url}>
                             <div className="row"  style={{alignItems:'center'}}>
                                 <div className="col-3 text-start">
-                                    <img src={imgUrl.url} alt={imgUrl.key} width={'100%'}/>
+                                    <img src={imgUrl.url}  style={{background:'#eee'}} alt={imgUrl.key} width={'100%'}/>
                                 </div>
                                 <div className="col-9">
                                     <p className="m-0">앨범</p>
