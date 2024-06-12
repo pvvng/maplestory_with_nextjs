@@ -102,7 +102,7 @@ export default function Banner({bannerContainer} :PropsType){
       <div className='mt-2' style={{textAlign:'center'}}>
         {
           bannerContainer.map((bc :BannerItem, i:number) => 
-          <SlideBtn key={i} color={slideBtnColor[i]} onClick={()=>{
+          <SlideBtn key={i} aria-label='next-slide' title='next-slide' color={slideBtnColor[i]} onClick={()=>{
             setBannerNum(i)
           }}>
             <FontAwesomeIcon icon={faCircle} />

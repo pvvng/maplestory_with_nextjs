@@ -47,6 +47,17 @@ let StyledRangeInput = styled.input`
     }
 `
 
+let HiddenLabel = styled.label`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+`
+
 interface VolumeInputType {
     volume :number,
     setVolume :Dispatch<SetStateAction<number>>
@@ -66,7 +77,8 @@ export default function VolumeInput({volume, setVolume} :VolumeInputType){
                 <span>&nbsp;{parseInt((volume * 100).toString())}</span>
             </div>
 
-            <StyledRangeInput type='range' min="1" max="100" defaultValue="50" style={{background :'black'}} onChange={(e)=>{
+            <HiddenLabel htmlFor="volume-control">Volume Control</HiddenLabel>
+            <StyledRangeInput id="volume-control" type='range' min="1" max="100" defaultValue="50" style={{background :'black'}} onChange={(e)=>{
                 let nowVolume :number= parseInt(e.target.value)
                 setVolume(nowVolume/100);
             }}/>

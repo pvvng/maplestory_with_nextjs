@@ -73,7 +73,7 @@ export default function RotateImage({imgUrl, isPlaying, duration} :PropsType){
   return(
     <div style={{overflow:'hidden'}}>
       <TurnTableContainer>
-        <TurnArmImage isRotating={isPlaying && duration > 0} src="/톤암.png"/>
+        <TurnArmImage isRotating={isPlaying && duration > 0} src="/톤암.png" alt="톤암 이미지"/>
         <RotateContainer isRotating={isPlaying && duration > 0} src = {imgUrl.url} alt={imgUrl.key} width = '100%' />
         <InnerHole></InnerHole>
       </TurnTableContainer>

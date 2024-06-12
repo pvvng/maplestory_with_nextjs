@@ -76,7 +76,7 @@ export function SlideAutoPlayBtn({isAutoPlay, autoBtnMovement,setAutoBtnMovement
 
     return(
         <SlideBtnContainer>
-            <SlideBtn move={autoBtnMovement} onClick={()=>{
+            <SlideBtn move={autoBtnMovement} title="music-play-button" aria-label="music-play-button" onClick={()=>{
                 if(autoBtnMovement === 50){
                     // 클릭시 오토플레이 종료, store에 오토플레이 상태 저장
                     setAutoBtnMovement(-50);

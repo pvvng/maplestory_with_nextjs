@@ -22,7 +22,7 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <html>
+    <html lang="ko">
         <head>
         	<title>Storify</title>
           <link rel='manifest' href='/manifest.json' />
