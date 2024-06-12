@@ -9,7 +9,11 @@ interface AlbumType {
 
 interface PropsType {
   themeAlbums : AlbumType[],
-  image :any
+  image :{images : ImageDataType[]}
+}
+
+interface ImageDataType {
+  [key :string] :string
 }
 
 

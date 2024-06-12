@@ -7,7 +7,14 @@ interface ParamsType {
   title :string
 }
 
-export default async function Songs(props: any) {
+interface PropsType {
+  params : ParamsType;
+  searchParams : {}
+}
+
+export default async function Songs(props :PropsType) {
+
+  console.log(props)
 
   // url 프로퍼티
   const params :ParamsType = props.params;

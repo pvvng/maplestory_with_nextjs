@@ -21,7 +21,9 @@ let rotateAnimation = keyframes`
 `
 
 // 스타일드 이미지 컴포넌트 정의
-let RotateContainer = styled(({ isRotating, ...rest }: { isRotating: boolean } & React.ImgHTMLAttributes<HTMLImageElement>) => <img {...rest} />)`
+let RotateContainer = styled.img.withConfig({
+  shouldForwardProp: props => !['isRotating'].includes(props)
+})<{isRotating: boolean}>`
   border-radius: 1000px;
   overflow: hidden;
   ${({ isRotating }) => isRotating && css`
@@ -38,7 +40,13 @@ let TurnTableContainer = styled.div`
   border : 1px solid #D2D2D2;
   border-radius : 1000px;
 `
-let TurnArmImage = styled.img<{isRotating : boolean}>`
+
+// props isRotating이 실제 DOM으로 전달되면서 오류 발생하는것을 방지
+let TurnArmImage = styled.img.withConfig({
+  // shouldForwardProp 설정을 활용해 isRotatinf이 DOM으로 전달 안되게 하기
+  // prop가 isRotating인지 확인하고 아니라면 true 반환
+  shouldForwardProp: (props) => !['isRotating'].includes(props),
+})<{isRotating: boolean}>`
   width : 80%;
   position : absolute;
   right : 0;

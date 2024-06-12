@@ -5,7 +5,9 @@ import { faArrowsRotate, faPause, faPlay, faXmark } from "@fortawesome/free-soli
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
-let SlideBtn = styled.button<{move :number}>`
+let SlideBtn = styled.button.withConfig({
+    shouldForwardProp: props => !['move'].includes(props)
+})<{move :number}>`
     width : 50%;
     background : none;
     background : black;

@@ -1,11 +1,8 @@
 
 import styled from "styled-components";
-import Link from "next/link";
 import { SignInBtn, SignOutBtn } from "./SiginTools/SignBtns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-
 
 let NavbarContainer = styled.div`
   width: 100%;

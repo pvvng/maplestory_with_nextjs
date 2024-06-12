@@ -4,7 +4,14 @@ import { findSimilarWord } from "@/app/funcions/checkLevenshtein";
 import getDBuserdata from "@/app/funcions/fetch/getDBuserdata";
 import SiginForm from "@/app/components/SiginTools/SignForm";
 
-export default async function AlbumPage(props :any){
+interface PropsType {
+    params : {album :string},
+    searchParams : {}
+}
+
+export default async function AlbumPage(props :PropsType){
+
+    console.log(props)
 
     const { session, isExist, userdata } = await getDBuserdata();
 

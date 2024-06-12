@@ -8,7 +8,11 @@ import styled from "styled-components"
 
 interface PropsType {
   popularAlbums : {theme :string, album :string[], icon: IconDefinition},
-  image : any
+  image : {images : ImageDataType[]}
+}
+
+interface ImageDataType {
+  [key :string]:string
 }
 
 let ContainerBox = styled.div`
@@ -24,7 +28,9 @@ let TripBtn = styled.button`
   }
 `
 
-let MovingBox = styled.div<{move :number}>`
+let MovingBox = styled.div.withConfig({
+  shouldForwardProp : props => !['move'].includes(props)
+})<{move :number}>`
   transition : all 1s;
   transform : translateX(${props => props.move}00%)
 `

@@ -8,7 +8,9 @@ let ProgressBarOuter = styled.div`
     border-radius : 10px;
 `
 
-let ProgressBarInner = styled.div<{remainDuration :number}>`
+let ProgressBarInner = styled.div.withConfig({
+    shouldForwardProp: props => !['remainDuration'].includes(props)
+})<{remainDuration :number}>`
     width : ${props => props.remainDuration}%;
     height : 100%;
     background :black;

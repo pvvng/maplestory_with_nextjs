@@ -18,7 +18,7 @@ interface AudioMetadata {
     ContentType: string;
     ETag: string;
     LastModified: string;
-    Metadata: Record<string, any>;
+    Metadata: Record<string, unknown>;
     ServerSideEncryption: string;
 }
   
@@ -38,6 +38,15 @@ interface PropsType {
 
 interface ImgUrlType {
     [key: string]: string;
+}
+
+interface FolderDataType {
+    ChecksumAlgorithm: string[];
+    ETag: string;
+    Key: string;
+    LastModified: string;
+    Size: number;
+    StorageClass: string;
 }
 
 let AudioBox = styled.div`
@@ -82,7 +91,7 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
         playlistAutoPlay(userdata, title, albumArr, nextAudioRef);
     }else{
         // 현재 음원이 위치한 folder 어레이 데이터 불러오기
-        const { folder } = useAudioQuery(album);
+        const { folder }:{ folder : FolderDataType[]|undefined } = useAudioQuery(album);
         useAudioEffect(folder, title, nextAudioRef);
     }
 

@@ -15,7 +15,7 @@ interface FolderType {
 };
 
 interface PropsType{
-  folder : any,
+  folder : FolderType[],
   userdata : WithId<Document> | undefined,
   i :number
 }

@@ -1,15 +1,24 @@
 // 일반 앨범 오토플레이 설정하는 커스텀 훅
 
-import { useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { fetchFolder } from '../fetch/fetchAWS';
 
-export const useAudioEffect = (folder: any, title :any, nextAudioRef :any) => {
+interface FolderDataType {
+  ChecksumAlgorithm: string[];
+  ETag: string;
+  Key: string;
+  LastModified: string;
+  Size: number;
+  StorageClass: string;
+}
+
+export const useAudioEffect = (folder: FolderDataType[]|undefined, title :string, nextAudioRef :MutableRefObject<string>) => {
   useEffect(() => {
     if(folder !== undefined){
       let nowPlay :number = -1;
       // 받은 폴더 데이터 가공
-      folder.map ((d :{[key:string]:string}, i:number) => {
+      folder.map ((d , i:number) => {
           if(d.Key.includes(title)){
               nowPlay = i
           }

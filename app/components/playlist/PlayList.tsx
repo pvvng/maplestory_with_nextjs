@@ -12,7 +12,9 @@ interface PropsType {
   decodedParams?: { album: string, title: string }
 }
 
-let BlurredBackground = styled.div<{image : string}> `
+let BlurredBackground = styled.div.withConfig({
+  shouldForwardProp : props => !['image'].includes(props)
+})<{image : string}>`
   position: relative;
   width: 100%;
   overflow: hidden;
