@@ -37,7 +37,7 @@ interface SlidePlayBtnType {
 export function SlidePlayBtn({playBtnMovement,setPlayBtnMovement, isPlaying, setIsPlaying}:SlidePlayBtnType){
     return(
         <SlideBtnContainer>
-            <SlideBtn move={playBtnMovement} onClick={()=>{
+            <SlideBtn move={playBtnMovement}  title="music-play-button" aria-label="music-play-button" onClick={()=>{
                 if(playBtnMovement === -50){
                     setPlayBtnMovement(50);
                     setIsPlaying(true)
@@ -76,7 +76,7 @@ export function SlideAutoPlayBtn({isAutoPlay, autoBtnMovement,setAutoBtnMovement
 
     return(
         <SlideBtnContainer>
-            <SlideBtn move={autoBtnMovement} title="music-play-button" aria-label="music-play-button" onClick={()=>{
+            <SlideBtn move={autoBtnMovement} title="music-autoplay-button" aria-label="music-autoplay-button" onClick={()=>{
                 if(autoBtnMovement === 50){
                     // 클릭시 오토플레이 종료, store에 오토플레이 상태 저장
                     setAutoBtnMovement(-50);
