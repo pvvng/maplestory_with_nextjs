@@ -6,12 +6,12 @@ import { fetchImages } from "../../funcions/fetch/fetchImages";
 import Banner from "./Banner";
 import SearchContainer from "./SearchContainer";
 import ThemeComponet from "./ThemeComponent";
-import Popular from "./Popular";
 import MiniMypage from "./MiniMypage";
 import { Document, WithId } from "mongodb";
 import axios from "axios";
 import { bannerContainer, themeAlbums, todayAlbums } from "@/app/data/mainPageData";
 import Footer from "../Footer";
+import ArccordionContainer from "./Arccodian";
 
 interface UserDataType {
   userdata : WithId<Document> | undefined,
@@ -37,18 +37,21 @@ export default function MainPage ({userdata, albumArr} :UserDataType){
         <div className="row">
           <div className="col-lg-4">
             {/* 검색 */}
-            <SearchContainer router={router} todayAlbums={todayAlbums} />
+            <SearchContainer router={router} />
+            {/* 아코디언 */}
+            <ArccordionContainer router={router} todayAlbums={todayAlbums} />
             {/* 플레이리스트 */}
             <MiniMypage userdata={userdata} albumArr={albumArr} />
-
           </div>
+          
           {/* 테마별 앨범 */}
-
           <div className="col-lg-8">
             <ThemeComponet themeAlbums={themeAlbums} image={image} />
           </div>
+
         </div>
       </div>
+      {/* 푸터 */}
       <Footer />
     </div>
   )
