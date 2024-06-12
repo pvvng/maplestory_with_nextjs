@@ -28,10 +28,12 @@ export default function Navbar({session} :{session :Session | null}){
     <div style={{width:'100%'}}>
       <NavbarContainer>
         <LeftAlignedLink
+          role="link"
+          aria-label="Go to mainpage"
           style={{cursor : 'pointer'}}
           onClick={()=>{router.push('/')}}
         >
-          <img src='/maplestory-icon.png' width={'50px'} />
+          <img src='/maplestory-icon.png' width={'50px'} alt="Storify" />
         </LeftAlignedLink>
 
         {/* <div style={{textAlign:'right'}}> */}
