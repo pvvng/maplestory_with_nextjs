@@ -36,13 +36,18 @@ let TurnTableContainer = styled.div`
   margin-right : auto;
   max-width : 360px;
   border : 1px solid #D2D2D2;
-  border-radius : 1000px
+  border-radius : 1000px;
 `
-let TurnArmImage = styled.img`
+let TurnArmImage = styled.img<{isRotating : boolean}>`
   width : 80%;
   position : absolute;
   right : 0;
   z-index : 10;
+  transition : all 0.8s;
+  /* 기준점을 오른쪽 가장자리로 설정 */
+  transform-origin: right top;
+  /* 45도 회전 */
+  transform: ${({isRotating}) => (isRotating ? 'rotate(0deg)' : 'rotate(-31deg)')};
 `
 
 let InnerHole = styled.div`
@@ -52,16 +57,18 @@ let InnerHole = styled.div`
   border-radius : 1000px;
   position : absolute; 
   top: 40%; 
-  right: 40%;
+  right: 38%;
 `
 
 export default function RotateImage({imgUrl, isPlaying, duration} :PropsType){
 
   return(
-    <TurnTableContainer>
-      <TurnArmImage src="/톤암.png"/>
-      <RotateContainer isRotating={isPlaying && duration > 0} src = {imgUrl.url} alt={imgUrl.key} width = '100%' />
-      <InnerHole></InnerHole>
-    </TurnTableContainer>
+    <div style={{overflow:'hidden'}}>
+      <TurnTableContainer>
+        <TurnArmImage isRotating={isPlaying && duration > 0} src="/톤암.png"/>
+        <RotateContainer isRotating={isPlaying && duration > 0} src = {imgUrl.url} alt={imgUrl.key} width = '100%' />
+        <InnerHole></InnerHole>
+      </TurnTableContainer>
+    </div>
   )
 }
