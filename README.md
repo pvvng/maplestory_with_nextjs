@@ -257,10 +257,13 @@
 ## 7. 업데이트 및 변동 사항
 
 - #### 2024-06-12
-앨범 커버 디자인을 CD처럼 수정하고, 턴테이블 톤암 CSS를 추가했습니다. 톤암은 음원 재생 여부에 따라 회전합니다. 
+1. 앨범 커버 디자인을 CD처럼 수정하고, 턴테이블 톤암 CSS를 추가했습니다. 톤암은 음원 재생 여부에 따라 회전합니다. 
 <div align='center'>
     <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/3b4a81a9-807a-461b-bf69-4cc00788a90a' width='48%' />
 </div>
+
+2. any 타입으로 선언된 일부 변수, Props의 타입을 알맞게 수정하였습니다.
+3. Styled-component의 HTML DOM 요소에 인식되지 않는 속성이 추가되는 문제를 shouldForwardProp 기능으로 해결하였습니다. 
 
 ## 8. file tree
 
