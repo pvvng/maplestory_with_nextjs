@@ -256,6 +256,12 @@
 
 ## 7. 업데이트 및 변동 사항
 
+- #### 2024-06-12
+앨범 커버 디자인을 추가하고, 턴테이블 톤암 CSS를 추가했습니다. 톤암은 음원 재생 여부에 따라 회전합니다. 
+<div align='center'>
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/3b4a81a9-807a-461b-bf69-4cc00788a90a' width='48%' />
+</div>
+
 ## 8. file tree
 
 * page & components
@@ -271,6 +277,7 @@
   ┃ ┃ ┣ 📜AlbumHeartBtn.tsx
   ┃ ┃ ┗ 📜SongHeartBtn.tsx
   ┃ ┣ 📂mainpage
+  ┃ ┃ ┣ 📜Arccodian.tsx
   ┃ ┃ ┣ 📜Banner.tsx
   ┃ ┃ ┣ 📜MainPage.tsx
   ┃ ┃ ┣ 📜MiniMypage.tsx
