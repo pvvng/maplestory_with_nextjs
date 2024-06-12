@@ -13,10 +13,10 @@ interface PropsType {
 }
 
 let SearchInput = styled.input`
-  width: 70%;
+  width: 67%;
   height: 40px;
   padding: 10px;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-top-left-radius : 10px;
   border-bottom-left-radius : 10px;
 

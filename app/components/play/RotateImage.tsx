@@ -28,11 +28,40 @@ let RotateContainer = styled(({ isRotating, ...rest }: { isRotating: boolean } &
     animation: ${rotateAnimation} 30s linear infinite;
   `} /* 회전 애니메이션 적용 */
 `
+
+let TurnTableContainer = styled.div`
+  position : relative;
+  width : 80%;
+  margin-left : auto;
+  margin-right : auto;
+  max-width : 360px;
+  border : 1px solid #D2D2D2;
+  border-radius : 1000px
+`
+let TurnArmImage = styled.img`
+  width : 80%;
+  position : absolute;
+  right : 0;
+  z-index : 10;
+`
+
+let InnerHole = styled.div`
+  background : white;
+  padding : 10%;
+  border : 1px solid #D2D2D2;
+  border-radius : 1000px;
+  position : absolute; 
+  top: 40%; 
+  right: 40%;
+`
+
 export default function RotateImage({imgUrl, isPlaying, duration} :PropsType){
 
   return(
-    <div style={{width: '80%', marginLeft:'auto', marginRight:'auto', maxWidth:'360px', border:'1px solid #D2D2D2', borderRadius:'1000px'}}>
+    <TurnTableContainer>
+      <TurnArmImage src="/톤암.png"/>
       <RotateContainer isRotating={isPlaying && duration > 0} src = {imgUrl.url} alt={imgUrl.key} width = '100%' />
-    </div>
+      <InnerHole></InnerHole>
+    </TurnTableContainer>
   )
 }
