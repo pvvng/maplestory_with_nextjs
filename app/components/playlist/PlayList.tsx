@@ -98,7 +98,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
   }, [userdata, decodedParams]);
 
   if (htmlPlaylist.length === 0 && decodedParams === undefined) {
-    return <p>플레이리스트가 비어있습니다.</p>
+    return <h1 style={{textAlign:'center'}}>플레이리스트가 비어있습니다.</h1>
   }
 
   return (

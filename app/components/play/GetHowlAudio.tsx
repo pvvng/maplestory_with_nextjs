@@ -2,7 +2,6 @@ import { Howl } from 'howler';
 import {  useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../layout';
 import { useAudioEffect, useAudioQuery } from '../../funcions/autoplay/useAlbumDataQuery';
 import { WithId, Document } from 'mongodb';
 import { playlistAutoPlay } from '../../funcions/autoplay/playlistAutoPlay';
@@ -11,6 +10,7 @@ import styled from 'styled-components';
 import { SlideAutoPlayBtn, SlidePlayBtn } from './AudioFunctions/SlideBtns';
 import VolumeInput from './AudioFunctions/VolumeInput';
 import ProgressBar from './AudioFunctions/ProgressBar';
+import { RootState } from '@/app/providers/ReduxProvider';
 
 interface AudioMetadata {
     AcceptRanges: string;

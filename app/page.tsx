@@ -16,9 +16,10 @@ export default async function Home() {
 
   if(!session) return <h1 style={{textAlign:'center'}}>로그인 후 이용 가능한 페이지입니다.</h1>
 
-  // 회원가입을 한 경우
+  let albumArr :string[] | undefined
+  // // 회원가입을 한 경우
   if(userdata !== undefined){
-    let albumArr = await checkDependency(JSON.parse(userdata.playlist))
+    albumArr = await checkDependency(JSON.parse(userdata.playlist))
 
     // 로그인 한 경우에만 보여주는 화면
     if (session) {

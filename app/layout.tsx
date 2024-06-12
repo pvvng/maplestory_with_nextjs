@@ -1,32 +1,26 @@
-'use client'
-
 import React, { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { Provider } from 'react-redux';
-import { store } from './store';
 import Navbar from './components/Navbar';
-import { SessionProvider } from 'next-auth/react';
-import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './font.css'
-
-const queryClient = new QueryClient();
+import ReactQueryProvider from './providers/ReactQueryProvider';
+import ReduxProvider from './providers/ReduxProvider';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth';
+import { Metadata } from 'next';
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-// 이미지에 pointer-events 속성을 적용하는 스타일드 컴포넌트 생성
-const ImageContainer = styled.div`
-  img {
-    pointer-events: none;
-  }
-`;
+export const metadata: Metadata = {
+  title: 'Storify',
+  description: '메이플스토리 BGM/OST 웹 플레이어 Storify 입니다.',
+}
+ 
+const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
 
-// store 타입 지정
-export type RootState = ReturnType<typeof store.getState>
+  const session = await getServerSession(authOptions);
 
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html>
         <head>
@@ -34,16 +28,14 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           <link rel='manifest' href='/manifest.json' />
         </head>
         <body style={{margin:'0px', boxSizing:'border-box'}}>
-          <SessionProvider>
-            <Provider store={store}>
-              <QueryClientProvider client={queryClient}>
-                <ImageContainer>
-                  <Navbar />
-                  {children}
-                </ImageContainer>
-              </QueryClientProvider>
-            </Provider>
-          </SessionProvider>
+          <ReduxProvider>
+            <ReactQueryProvider >
+              {/* <ImageContainer> */}
+                <Navbar session={session} />
+                {children}
+              {/* </ImageContainer> */}
+            </ReactQueryProvider>
+          </ReduxProvider>
         </body>
     </html>
 );

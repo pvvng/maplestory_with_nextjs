@@ -1,8 +1,9 @@
+'use client'
 
 import styled from "styled-components";
 import { SignInBtn, SignOutBtn } from "./SiginTools/SignBtns";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
 
 let NavbarContainer = styled.div`
   width: 100%;
@@ -19,11 +20,9 @@ let LeftAlignedLink = styled.a`
   text-align: left;
 `;
 
-export default function Navbar(){
+export default function Navbar({session} :{session :Session | null}){
 
-  let session = useSession()
-
-  let router = useRouter()
+  let router = useRouter();
 
   return(
     <div style={{width:'100%'}}>
@@ -41,7 +40,7 @@ export default function Navbar(){
           </span>
 
           {
-            !session.data?
+            !session?
             <SignInBtn />:
             <SignOutBtn />
           }

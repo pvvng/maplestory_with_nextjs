@@ -21,8 +21,8 @@
   "lang":"ko-KR",
   "start_url":"/",
   "scope":"/",
-  "name" : "메이플 BGM/OST 플레이어 - Storify",
+  "name" : "메이플스토리 BGM/OST 플레이어 - Storify",
   "short_name": "Storify",
-  "description":"메이플 BGM/OST 웹 플레이어 Storify 입니다.",
+  "description":"메이플스토리 BGM/OST 웹 플레이어 Storify 입니다.",
   "id":"mapleBGMplayer"
 }
