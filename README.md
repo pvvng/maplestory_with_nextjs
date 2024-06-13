@@ -263,7 +263,19 @@
 </div>
 
 2. any 타입으로 선언된 일부 변수, Props의 타입을 알맞게 수정하였습니다.
-3. Styled-component의 HTML DOM 요소에 인식되지 않는 속성이 추가되는 문제를 shouldForwardProp 기능으로 해결하였습니다. 
+3. Styled-component의 HTML DOM 요소에 인식되지 않는 속성이 추가되는 문제를 shouldForwardProp 기능으로 해결하였습니다.
+
+- #### 2024-06-13
+1. Google DevTools LightHouse 점수를 바탕으로 성능 최적화를 진행하였습니다.
+   - performance : 60 ~ 70 => 86 ~ 95
+   - Accesibility : 70 ~ 80 => 100
+   - Best Practice : 100
+   - SEO : 90 ~ 100 => 100 
+   <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/4894f3ac-5685-4aca-808c-7ba8f7701080' width='48%' />
+
+   - aws bucket에 prefetch와 이미지 lazy load, 이미지 형식 .webp로 변환, 적잘한 이미지 사이즈 지정 등으로 최적화를 진행하였습니다.
+   - 다만, album, album 재생 페이지에서 performance 항목이 86점이 나왔기 때문에 추가적인 최적화 과정을 거칠 예정입니다.  
+
 
 ## 8. file tree
 
