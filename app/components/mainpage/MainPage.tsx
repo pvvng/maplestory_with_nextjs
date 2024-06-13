@@ -11,6 +11,7 @@ import { Document, WithId } from "mongodb";
 import { bannerContainer, themeAlbums, todayAlbums } from "@/app/data/mainPageData";
 import Footer from "../Footer";
 import ArccordionContainer from "./Arccodian";
+import Chart from "./Chart";
 
 
 interface UserDataType {
@@ -46,6 +47,7 @@ export default function MainPage ({userdata, albumArr} :UserDataType){
           
           {/* 테마별 앨범 */}
           <div className="col-lg-8">
+            <Chart/>
             <ThemeComponet themeAlbums={themeAlbums} image={image} />
           </div>
 
