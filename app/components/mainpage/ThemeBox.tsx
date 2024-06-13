@@ -8,7 +8,7 @@ import {useState } from "react"
 import styled from "styled-components"
 
 interface PropsType {
-  popularAlbums : {theme :string, album :string[], icon: IconDefinition},
+  themeAlbums : {theme :string, album :string[], icon: IconDefinition},
   image : {images : ImageDataType[]}
 }
 
@@ -46,7 +46,7 @@ let OpacityImgContainer = styled.div`
     }
   }
 `
-export default function Popular({popularAlbums, image} :PropsType){
+export default function ThemeBox({themeAlbums, image} :PropsType){
 
   let router = useRouter();
   // 캐러셀 이동 측정 변수
@@ -55,9 +55,9 @@ export default function Popular({popularAlbums, image} :PropsType){
   return(
     <div style={{overflow:'hidden'}}>
       <ContainerBox >
-        <span className="fw-bold" style={{fontSize:'18px'}}>{popularAlbums.theme}</span>
+        <span className="fw-bold" style={{fontSize:'18px'}}>{themeAlbums.theme}</span>
         <TripBtn className="mx-2" onClick={()=>{
-          let arrLength = popularAlbums.album.length;
+          let arrLength = themeAlbums.album.length;
           if (moveCounter >= 0 && moveCounter < arrLength - 3) {
             setMoveCounter(prev => prev + 1);
           } else if (moveCounter === arrLength - 3) {
@@ -66,10 +66,10 @@ export default function Popular({popularAlbums, image} :PropsType){
             setMoveCounter(prev => prev - 1);
           }
 
-        }}>Click! <FontAwesomeIcon icon={popularAlbums.icon} /></TripBtn>
+        }}>Click! <FontAwesomeIcon icon={themeAlbums.icon} /></TripBtn>
         <div className="row mt-3" >
           {
-            popularAlbums.album.map((ta :string, i:number) => {
+            themeAlbums.album.map((ta :string, i:number) => {
               let albumImage = '';
               let imageAlt = '';
               image.images.map((img : {[key :string] :string}) => {
