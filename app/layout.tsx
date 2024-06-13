@@ -20,11 +20,14 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
 
   const session = await getServerSession(authOptions);
+  const bucketName = process.env.NETLIFY_AWS_BUCKET_NAME;
 
   return (
     <html lang="ko">
         <head>
         	<title>Storify</title>
+          <link rel='dns-prefetch' href = {`https://${bucketName}.s3.ap-northeast-2.amazonaws.com`}/>
+          <link rel='preconnect' href = {`https://${bucketName}.s3.ap-northeast-2.amazonaws.com`}/>
           <link rel='manifest' href='/manifest.json' />
         </head>
         <body style={{margin:'0px', boxSizing:'border-box'}}>
