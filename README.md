@@ -267,8 +267,8 @@
 
 - #### 2024-06-13
 1. Google DevTools LightHouse 점수를 바탕으로 성능 최적화를 진행하였습니다.
-   - performance : 60-70 => 86 ~ 95
-   - Accesibility : 70-80 => 100
+   - performance : 60 ~ 70 => 86 ~ 95
+   - Accesibility : 70 ~ 80 => 100
    - Best Practice : 100
    - SEO : 90 ~ 100 => 100 
    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/4894f3ac-5685-4aca-808c-7ba8f7701080' width='48%' />
