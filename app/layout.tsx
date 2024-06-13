@@ -27,7 +27,6 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
         <head>
         	<title>Storify</title>
           <link rel='dns-prefetch' href = {`https://${bucketName}.s3.ap-northeast-2.amazonaws.com/이미지`}/>
-          <link rel='preconnect' href = {`https://${bucketName}.s3.ap-northeast-2.amazonaws.com/이미지`}/>
           <link rel='manifest' href='/manifest.json' />
         </head>
         <body style={{margin:'0px', boxSizing:'border-box'}}>
