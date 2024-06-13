@@ -1,4 +1,3 @@
-import { connectDB } from "@/util/database";
 import MainPage from "./components/mainpage/MainPage";
 import SiginForm from "./components/SiginTools/SignForm";
 import { checkDependency } from "./funcions/fetch/checkDependency";
@@ -26,7 +25,6 @@ export default async function Home() {
       return <MainPage userdata = {userdata} albumArr={albumArr} />
     }
   }
-
 }
 
 

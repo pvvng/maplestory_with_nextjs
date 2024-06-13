@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface PropsType {
   bannerContainer : BannerItem[]
@@ -84,7 +85,16 @@ export default function Banner({bannerContainer} :PropsType){
     <BannerBox>
       <div className='row'>
         <InnerBox className="col-6" style={{textAlign:'center'}}>
-          <img style={{maxWidth:'360px'}} src={bannerContainer[bannerNum].url} alt={bannerContainer[bannerNum].album} width={'100%'}  />
+          <Image 
+            style={{maxWidth:'360px', width:'100%', height:'auto'}} 
+            src={bannerContainer[bannerNum].url} 
+            alt={bannerContainer[bannerNum].album} 
+            width={360} 
+            height={360} 
+            loading='lazy'
+            placeholder = 'blur'
+            blurDataURL='/replace-img.png'
+          />
         </InnerBox>
         <InnerBox className="col-6">
           <div style={{marginTop:'auto', marginBottom:'auto'}}>

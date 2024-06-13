@@ -8,10 +8,10 @@ import SearchContainer from "./SearchContainer";
 import ThemeComponet from "./ThemeComponent";
 import MiniMypage from "./MiniMypage";
 import { Document, WithId } from "mongodb";
-import axios from "axios";
 import { bannerContainer, themeAlbums, todayAlbums } from "@/app/data/mainPageData";
 import Footer from "../Footer";
 import ArccordionContainer from "./Arccodian";
+
 
 interface UserDataType {
   userdata : WithId<Document> | undefined,

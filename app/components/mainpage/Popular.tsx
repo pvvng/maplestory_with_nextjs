@@ -2,6 +2,7 @@
 
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import {useState } from "react"
 import styled from "styled-components"
@@ -82,11 +83,13 @@ export default function Popular({popularAlbums, image} :PropsType){
                   onClick={()=>{ router.push('/album/' + ta) }}
                 >
                   <OpacityImgContainer >
-                    <img
-                      style={{cursor:'pointer', borderRadius:'1000px'}}
+                    <Image
+                      style={{cursor:'pointer', borderRadius:'1000px', maxWidth:'100%', height:'auto'}}
                       src={albumImage} 
                       alt ={imageAlt} 
-                      width={'100%'} 
+                      loading="lazy"
+                      width={300}
+                      height={300}
                     />
                   </OpacityImgContainer>
                   <p className="mt-2" style={{textAlign:'center'}}>{ta}</p>
