@@ -12,16 +12,28 @@ import { bannerContainer, themeAlbums, todayAlbums } from "@/app/data/mainPageDa
 import Footer from "../Footer";
 import ArccordionContainer from "./Arccodian";
 import Chart from "./Chart";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setTopTrackState } from "@/app/store";
 
 
 interface UserDataType {
   userdata : WithId<Document> | undefined,
-  albumArr : string[]
+  albumArr : string[],
+  topTrack : WithId<Document>[]
 }
 
-export default function MainPage ({userdata, albumArr} :UserDataType){
-  
+export default function MainPage ({userdata, albumArr, topTrack} :UserDataType){
+
   let router = useRouter();
+
+  const dispatch = useDispatch();
+
+  // 컴포넌트 마운트 시 인기 급상승 음악 어레이 데이터 store에 저장하기
+  useEffect(()=>{
+    dispatch(setTopTrackState(topTrack))
+  },[])
+  
 
   // 이미지 경로 aws에서 가져오기
   const { data :image, isLoading , isError  } = useQuery( ['image'], () => fetchImages())

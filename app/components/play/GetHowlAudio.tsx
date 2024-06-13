@@ -180,10 +180,11 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
         if(stringifyDuration === stringifyStoredDuration){
             // 최초 마운트 시 상태 default 값이 0이 되어 동일해져서 조회수 증가하는걸 막기 위해
             if(stringifyDuration !== '0' && stringifyStoredDuration !== '0'){
-                handleViews(title)
+                handleViews(album + '/' + title + '.mp3')
             }
         }
     },[duration])
+
 
     // 오토플레이 상태에 따라 슬라이드 버튼 상태 전환
     useEffect(()=>{
