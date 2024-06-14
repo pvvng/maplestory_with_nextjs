@@ -1,9 +1,13 @@
 import { connectDB } from "@/util/database";
-import { NextApiRequest, NextApiResponse } from "next";
+import { MongoClient } from "mongodb";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+exports.handler = async (event :any, context :any) => {
+    let client;
+    
     try {
-        const db = (await connectDB).db('maple-bgm');
+        // MongoDB 연결
+        client = await connectDB;
+        const db = client.db('maple-bgm');
 
         // 현재 날짜
         const now = new Date();
@@ -40,11 +44,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         console.log(`${result.modifiedCount} documents updated`);
 
-        return res.status(200).json('업데이트 완료');
+        // 성공적인 응답 반환
+        return {
+            statusCode: 200,
+            body: JSON.stringify('업데이트 완료'),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
     } catch (error) {
         console.error('업데이트 중 에러 발생:', error);
-        return res.status(500).json({ error: '서버 오류' });
+
+        // 에러 응답 반환
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: '서버 오류' }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
     } finally {
-        await (await connectDB).close();
+        // MongoDB 클라이언트 연결 닫기
+        if (client) {
+            await client.close();
+        }
     }
-}
+};
