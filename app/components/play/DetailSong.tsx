@@ -94,7 +94,9 @@ export default function DetailSong({params, userdata, topTrack, myPageComponent,
               {
                 !myPageComponent?
                 <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />:
-                <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+                <div className="p-md-5">
+                  <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+                </div>
               }
             {/* </div> */}
           </div>
