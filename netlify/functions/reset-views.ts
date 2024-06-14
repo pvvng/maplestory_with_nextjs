@@ -9,12 +9,14 @@ exports.handler = async (event :any, context :any) => {
         client = await connectDB;
         const db = client.db('maple-bgm');
 
+        // 지금 시간
         const now = new Date();
+
         // 자정 기준 어제 날짜 구하기
         const yesterday = new Date(now);
         yesterday.setDate(yesterday.getDate() - 1);
         
-        // ISO 형식으로 변환
+        // 어제 날짜 ISO 형식으로 변환
         const isoYesterday = yesterday.toISOString();
         const isoYesterdayDate = isoYesterday.substring(0, isoYesterday.indexOf('T'));
         
@@ -52,8 +54,10 @@ exports.handler = async (event :any, context :any) => {
                 }
             );
 
-            console.log(`${result.modifiedCount} documents updated for ${faTitle}`);
+            console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate} / ${result.modifiedCount} documents updated for ${faTitle}`);
         }
+
+        console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate}`)
         
         // 성공적인 응답 반환
         return {
