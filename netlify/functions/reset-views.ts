@@ -9,20 +9,31 @@ exports.handler = async (event :any, context :any) => {
         client = await connectDB;
         const db = client.db('maple-bgm');
 
-        // 현재 날짜
         const now = new Date();
-        const isoNow = now.toISOString();
-        const isoNowDate = isoNow.substring(0, isoNow.indexOf('T'));
-        // 자정 기준 어제 날짜
+        // 자정 기준 어제 날짜 구하기
         const yesterday = new Date(now);
         yesterday.setDate(yesterday.getDate() - 1);
-        // iso 변환
+        
+        // ISO 형식으로 변환
         const isoYesterday = yesterday.toISOString();
-        let isoYesterdayDate = isoYesterday.substring(0, isoNowDate.indexOf('T'));
+        const isoYesterdayDate = isoYesterday.substring(0, isoYesterday.indexOf('T'));
+        
+        // 오늘 자정 시각을 구하기
+        const todayMidnight = new Date(now);
+        // 자정 시간으로 설정 (0시 0분 0초 0밀리초)
+        todayMidnight.setHours(0, 0, 0, 0);
 
+        const isoTodayMidnight = todayMidnight.toISOString();
+        const isoTodayMidnightDate = isoTodayMidnight.substring(0, isoTodayMidnight.indexOf('T'));
+        
         // 업데이트할 문서들을 찾아서 Bulk Write Operations를 사용하여 업데이트
-        // 모든 문서 조회
-        let findArr = await db.collection('views').find({ updatedAt: { $regex: isoYesterdayDate } }).toArray();
+        let findArr = await db.collection('views').find({
+            updatedAt: {
+                // 어제 날짜 이상 ~ 오늘 자정 이하의 데이터 불러오기
+                $gte: isoYesterdayDate,
+                $lt: isoTodayMidnightDate
+            }
+        }).toArray();
 
         // 각 문서에 대해 업데이트 수행
         for (let fa of findArr) {
@@ -36,7 +47,7 @@ exports.handler = async (event :any, context :any) => {
                     $set: {
                         previousViews: currentViews, // currentViews를 previousViews로 복사
                         increaseViews: 0, // increaseViews를 0으로 설정
-                        updatedAt: isoNow // updatedAt을 현재 시간으로 설정
+                        updatedAt: isoTodayMidnight // updatedAt을 현재 시간으로 설정
                     }
                 }
             );
@@ -44,25 +55,6 @@ exports.handler = async (event :any, context :any) => {
             console.log(`${result.modifiedCount} documents updated for ${faTitle}`);
         }
         
-        // const updateOperations = [
-        //     {
-        //         updateMany: {
-        //             filter: filter,
-        //             update: {
-        //                 $set: {
-        //                     previousViews: '$currentViews', // currentViews를 previousViews로 복사
-        //                     increaseViews: 0, // viewIncrease를 0으로 설정
-        //                     updatedAt: isoNow
-        //                 }
-        //             }
-        //         }
-        //     }
-        // ];
-
-        // // Bulk Write Operations 실행
-        // const result = await db.collection('views').bulkWrite(updateOperations);
-
-
         // 성공적인 응답 반환
         return {
             statusCode: 200,
@@ -83,10 +75,4 @@ exports.handler = async (event :any, context :any) => {
             },
         };
     } 
-    // finally {
-    //     // MongoDB 클라이언트 연결 닫기
-    //     if (client) {
-    //         await client.close();
-    //     }
-    // }
 };
