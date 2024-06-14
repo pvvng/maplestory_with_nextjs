@@ -54,6 +54,10 @@ exports.handler = async () => {
             // 콘솔 로그
             console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate} / ${result.modifiedCount} documents updated for ${faTitle}`);
         }
+
+        console.log(isoTodayMidnightDate > '2024-06-14T13:09:24.229Z')
+        console.log(isoYesterdayDate <= '2024-06-14T13:09:24.229Z')
+        console.log(findArr)
         
         // 성공적인 응답 반환
         return {
