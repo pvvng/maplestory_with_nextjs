@@ -11,7 +11,7 @@ exports.handler = async () => {
 
         // 자정 기준 어제 날짜 구하기
         const yesterday = new Date(now);
-        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday.setDate(yesterday.getDate());
         
         // 어제 날짜 ISO 형식으로 변환
         const isoYesterday = yesterday.toISOString();
@@ -56,8 +56,8 @@ exports.handler = async () => {
             console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate} / ${result.modifiedCount} documents updated for ${faTitle}`);
         }
 
-        console.log(isoTodayMidnightDate, isoTodayMidnightDate > '2024-06-14T13:09:24.229Z')
-        console.log(isoYesterdayDate, isoYesterdayDate <= '2024-06-14T13:09:24.229Z')
+        console.log(isoTodayMidnightDate)
+        console.log(isoYesterdayDate)
         console.log(findArr)
         
         // 성공적인 응답 반환
