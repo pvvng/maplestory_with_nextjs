@@ -21,6 +21,7 @@ exports.handler = async () => {
         const todayMidnight = new Date(now);
         // 자정 시간으로 설정 (0시 0분 0초 0밀리초)
         todayMidnight.setHours(0, 0, 0, 0);
+        todayMidnight.setDate(todayMidnight.getDate() + 1);
 
         const isoTodayMidnight = todayMidnight.toISOString();
         const isoTodayMidnightDate = isoTodayMidnight.substring(0, isoTodayMidnight.indexOf('T'));
