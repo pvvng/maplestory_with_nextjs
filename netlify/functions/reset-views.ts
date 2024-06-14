@@ -9,8 +9,14 @@ exports.handler = async () => {
         // 지금 시간
         const now = new Date();
 
+        // 한국 시간 기준 오프셋 (UTC+9, 밀리초 단위)
+        const koreanOffset = 9 * 60 * 60 * 1000;
+
+        // 현재 시간에 한국 시간 오프셋을 더하여 한국 시간으로 변환
+        const koreanNow = new Date(now.getTime() + koreanOffset);
+
         // 자정 기준 어제 날짜 구하기
-        const yesterday = new Date(now);
+        const yesterday = new Date(koreanNow);
         yesterday.setDate(yesterday.getDate());
         
         // 어제 날짜 ISO 형식으로 변환
@@ -18,7 +24,7 @@ exports.handler = async () => {
         const isoYesterdayDate = isoYesterday.substring(0, isoYesterday.indexOf('T'));
         
         // 오늘 자정 시각을 구하기
-        const todayMidnight = new Date(now);
+        const todayMidnight = new Date(koreanNow);
         // 자정 시간으로 설정 (0시 0분 0초 0밀리초)
         todayMidnight.setHours(0, 0, 0, 0);
         todayMidnight.setDate(todayMidnight.getDate() + 1);

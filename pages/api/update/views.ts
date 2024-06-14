@@ -9,8 +9,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
         // 현재 시간
         const now = new Date();
-        const isoDateString = now.toISOString();
-    
+        const koreanOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초 단위)
+        
+        // 한국 시간으로 변환
+        const koreanTime = new Date(now.getTime() + koreanOffset);
+        
+        // ISO 형식의 문자열로 변환
+        const isoDateString = koreanTime.toISOString();
+        
         // 콜렉션에 들어온 데이터가 있는지 찾기
         let findResult = await db.collection('views').findOne(filter);
     
