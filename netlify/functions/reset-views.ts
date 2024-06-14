@@ -30,8 +30,8 @@ exports.handler = async (event :any, context :any) => {
                     filter: filter,
                     update: {
                         $set: {
-                            previousViews: "$currentViews", // currentViews를 previousViews로 복사
-                            viewIncrease: 0, // viewIncrease를 0으로 설정
+                            ['previousViews']: '$currentViews', // currentViews를 previousViews로 복사
+                            increaseViews: 0, // viewIncrease를 0으로 설정
                             updatedAt: isoNow
                         }
                     }
