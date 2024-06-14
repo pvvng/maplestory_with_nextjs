@@ -1,13 +1,10 @@
 import { connectDB } from "@/util/database";
-import { MongoClient } from "mongodb";
 
-exports.handler = async (event :any, context :any) => {
-    let client;
+exports.handler = async () => {
     
     try {
         // MongoDB 연결
-        client = await connectDB;
-        const db = client.db('maple-bgm');
+        const db = (await connectDB).db('maple-bgm');
 
         // 지금 시간
         const now = new Date();
@@ -54,10 +51,9 @@ exports.handler = async (event :any, context :any) => {
                 }
             );
 
+            // 콘솔 로그
             console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate} / ${result.modifiedCount} documents updated for ${faTitle}`);
         }
-
-        console.log(`standard : ${isoYesterdayDate} ~ ${isoTodayMidnightDate}`)
         
         // 성공적인 응답 반환
         return {

@@ -26,14 +26,12 @@ interface UserDataType {
 export default function MainPage ({userdata, albumArr, topTrack} :UserDataType){
 
   let router = useRouter();
-
   const dispatch = useDispatch();
 
-  // 컴포넌트 마운트 시 인기 급상승 음악 어레이 데이터 store에 저장하기
   useEffect(()=>{
+    // 컴포넌트 topTrack이 변경될 때마다 시 인기 급상승 음악 어레이 데이터 store에 저장하기
     dispatch(setTopTrackState(topTrack))
-  },[])
-  
+  },[topTrack])
 
   // 이미지 경로 aws에서 가져오기
   const { data :image, isLoading , isError  } = useQuery( ['image'], () => fetchImages())

@@ -5,9 +5,9 @@ import { connectDB } from "@/util/database";
 export default async function getTopTracks(){
   const db = (await connectDB).db('maple-bgm');
 
-  // 최근 24시간 동안 조회수가 가장 많이 증가한 음원들을 찾습니다.
+  // 최근 24시간 동안 조회수가 가장 많이 증가한 음원들을 찾기.
   const topTracks = await db.collection('views').find()
-      .sort({ increaseViews: -1 })
+      .sort({ increaseViews: -1, currentViews: -1  })
       .limit(10)
       .toArray();
 
