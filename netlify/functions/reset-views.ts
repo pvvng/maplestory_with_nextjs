@@ -18,32 +18,50 @@ exports.handler = async (event :any, context :any) => {
         yesterday.setDate(yesterday.getDate() - 1);
         // iso 변환
         const isoYesterday = yesterday.toISOString();
-        let isoYesterdayDate = isoYesterday.substring(0, isoYesterday.indexOf('T'));
+        let isoYesterdayDate = isoYesterday.substring(0, isoNowDate.indexOf('T'));
 
         // 업데이트할 문서들을 찾아서 Bulk Write Operations를 사용하여 업데이트
-        const filter = {
-            updatedAt: { $regex: isoNowDate } // 어제 날짜에 해당하는 문서 필터링
-        };
+        // 모든 문서 조회
+        let findArr = await db.collection('views').find({ updatedAt: { $regex: isoYesterdayDate } }).toArray();
 
-        const updateOperations = [
-            {
-                updateMany: {
-                    filter: filter,
-                    update: {
-                        $set: {
-                            previousViews: '$currentViews', // currentViews를 previousViews로 복사
-                            increaseViews: 0, // viewIncrease를 0으로 설정
-                            updatedAt: isoNow
-                        }
+        // 각 문서에 대해 업데이트 수행
+        for (let fa of findArr) {
+            let faTitle :string = fa.title;
+            let currentViews :number = fa.currentViews;
+
+            // 문서 업데이트
+            let result = await db.collection('views').updateOne(
+                { title: faTitle },
+                {
+                    $set: {
+                        previousViews: currentViews, // currentViews를 previousViews로 복사
+                        increaseViews: 0, // increaseViews를 0으로 설정
+                        updatedAt: isoNow // updatedAt을 현재 시간으로 설정
                     }
                 }
-            }
-        ];
+            );
 
-        // Bulk Write Operations 실행
-        const result = await db.collection('views').bulkWrite(updateOperations);
+            console.log(`${result.modifiedCount} documents updated for ${faTitle}`);
+        }
+        
+        // const updateOperations = [
+        //     {
+        //         updateMany: {
+        //             filter: filter,
+        //             update: {
+        //                 $set: {
+        //                     previousViews: '$currentViews', // currentViews를 previousViews로 복사
+        //                     increaseViews: 0, // viewIncrease를 0으로 설정
+        //                     updatedAt: isoNow
+        //                 }
+        //             }
+        //         }
+        //     }
+        // ];
 
-        console.log(`${result.modifiedCount} documents updated`);
+        // // Bulk Write Operations 실행
+        // const result = await db.collection('views').bulkWrite(updateOperations);
+
 
         // 성공적인 응답 반환
         return {
