@@ -12,6 +12,7 @@ exports.handler = async (event :any, context :any) => {
         // 현재 날짜
         const now = new Date();
         const isoNow = now.toISOString();
+        const isoNowDate = isoNow.substring(0, isoNow.indexOf('T'));
         // 자정 기준 어제 날짜
         const yesterday = new Date(now);
         yesterday.setDate(yesterday.getDate() - 1);
@@ -21,7 +22,7 @@ exports.handler = async (event :any, context :any) => {
 
         // 업데이트할 문서들을 찾아서 Bulk Write Operations를 사용하여 업데이트
         const filter = {
-            updatedAt: { $regex: isoYesterdayDate } // 어제 날짜에 해당하는 문서 필터링
+            updatedAt: { $regex: isoNowDate } // 어제 날짜에 해당하는 문서 필터링
         };
 
         const updateOperations = [
