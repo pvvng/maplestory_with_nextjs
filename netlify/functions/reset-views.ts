@@ -17,7 +17,8 @@ exports.handler = async () => {
 
         // 자정 기준 어제 날짜 구하기
         const yesterday = new Date(koreanNow);
-        yesterday.setDate(yesterday.getDate());
+        yesterday.setHours(0, 0, 0, 0);
+        yesterday.setDate(yesterday.getDate() - 1);
         
         // 어제 날짜 ISO 형식으로 변환
         const isoYesterday = yesterday.toISOString();
@@ -27,7 +28,7 @@ exports.handler = async () => {
         const todayMidnight = new Date(koreanNow);
         // 자정 시간으로 설정 (0시 0분 0초 0밀리초)
         todayMidnight.setHours(0, 0, 0, 0);
-        todayMidnight.setDate(todayMidnight.getDate() + 1);
+        todayMidnight.setDate(todayMidnight.getDate());
 
         const isoTodayMidnight = todayMidnight.toISOString();
         const isoTodayMidnightDate = isoTodayMidnight.substring(0, isoTodayMidnight.indexOf('T'));
