@@ -20,7 +20,6 @@ export default function PopularSong ({topTrackItem, number} : {topTrackItem : Wi
 
     let songTitle = ((topTrackItem.title.replace('.mp3','')).split('/')[1])
 
-    console.log(number)
     return(
         <SongContainerBox className="row" onClick={()=>{
             router.push('/album/' + topTrackItem.title)

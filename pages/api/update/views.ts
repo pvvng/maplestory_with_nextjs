@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let result = await db.collection('views').updateOne(
             filter,
             {
-                $inc: { currentViews: 1 },
+                $inc: { currentViews: 1 }, //조회수 1 증가
                 $set: { 
                     increaseViews: increaseViews, // 증가량 업데이트
                     updatedAt: isoDateString 
