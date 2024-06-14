@@ -30,7 +30,7 @@ exports.handler = async (event :any, context :any) => {
                     filter: filter,
                     update: {
                         $set: {
-                            ['previousViews']: '$currentViews', // currentViews를 previousViews로 복사
+                            previousViews: '$currentViews', // currentViews를 previousViews로 복사
                             increaseViews: 0, // viewIncrease를 0으로 설정
                             updatedAt: isoNow
                         }
@@ -63,10 +63,11 @@ exports.handler = async (event :any, context :any) => {
                 'Content-Type': 'application/json',
             },
         };
-    } finally {
-        // MongoDB 클라이언트 연결 닫기
-        if (client) {
-            await client.close();
-        }
-    }
+    } 
+    // finally {
+    //     // MongoDB 클라이언트 연결 닫기
+    //     if (client) {
+    //         await client.close();
+    //     }
+    // }
 };
