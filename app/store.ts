@@ -18,7 +18,7 @@ export let { setAutoPlayStatus } = autoPlay.actions
 
 const initialTopTrack : WithId<Document>[] = []
 
-// 오토플레이 여부 감시
+// 인기 차트
 const topTrack = createSlice({
   name: 'topTrack ',
   initialState : initialTopTrack,
