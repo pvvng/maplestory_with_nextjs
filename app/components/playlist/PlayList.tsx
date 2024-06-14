@@ -102,7 +102,7 @@ export default function PlayList({ userdata, albumArr, decodedParams }: PropsTyp
   }
 
   return (
-    <div className="mt-3" style={{alignItems:'center'}}>
+    <div className="mt-3 p-md-5" style={{alignItems:'center'}}>
       <div>
         <BlurredBackground className='mb-4' image = {userIcon}>
           <div className="row"  style={{alignItems:'center'}}>

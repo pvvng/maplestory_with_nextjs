@@ -2,13 +2,13 @@
 
 import { connectDB } from "@/util/database";
 
-export default async function getTopTracks(){
+export default async function getTopTracks(limit :number){
   const db = (await connectDB).db('maple-bgm');
 
   // 최근 24시간 동안 조회수가 가장 많이 증가한 음원들을 찾기.
   const topTracks = await db.collection('views').find()
       .sort({ increaseViews: -1, currentViews: -1  })
-      .limit(10)
+      .limit(limit)
       .toArray();
 
   return (topTracks)

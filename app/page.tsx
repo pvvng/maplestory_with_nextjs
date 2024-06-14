@@ -24,7 +24,7 @@ export default async function Home() {
     albumArr = await checkDependency(JSON.parse(userdata.playlist))
 
     // 인기 급상승 노래 불러오기
-    let topTrack = await getTopTracks();
+    let topTrack = await getTopTracks(10);
 
     // 로그인 한 경우에만 보여주는 화면
     if (session) {

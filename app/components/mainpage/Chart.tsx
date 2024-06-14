@@ -6,6 +6,17 @@ import { RootState } from "@/app/providers/ReduxProvider";
 import { useRouter } from "next/navigation";
 import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+
+let GoBtn = styled.button`
+  transition :all 0.5s;
+  border : none;
+  font-size : 14px;
+
+  &:hover{
+    background :#CC0000;
+  }
+`
 
 export default function Chart (){
 
@@ -31,7 +42,8 @@ export default function Chart (){
             <p className="fw-bold m-0" style={{fontSize:'20px'}}>
                 🔥 인기 급상승&nbsp;
             </p>
-            <span style={{color:'#666666', fontSize:'14px'}}>{formatDate()} 기준</span>
+            <span style={{color:'#666666', fontSize:'14px'}}>{formatDate()} 기준 </span>
+            <span style={{color:'#666666', fontSize:'14px'}}>(매일 자정마다 초기화 됩니다)</span>
             {
                 topTrack.map((tt, i:number) => {
                     return <PopularSong key ={i} number={i} topTrackItem={tt}/>
