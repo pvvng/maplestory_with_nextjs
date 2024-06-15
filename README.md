@@ -314,79 +314,91 @@
 
 * page & components
   ```
-  📦 app
-  ┣ 📂album
-  ┃ ┗ 📂[album]
-  ┃   ┣ 📂[title]
-  ┃   ┃ ┗ 📜page.tsx
-  ┃   ┗ 📜page.tsx
-  ┣ 📂components
-  ┃ ┣ 📂heartbtn
-  ┃ ┃ ┣ 📜AlbumHeartBtn.tsx
-  ┃ ┃ ┗ 📜SongHeartBtn.tsx
-  ┃ ┣ 📂mainpage
-  ┃ ┃ ┣ 📜Arccodian.tsx
-  ┃ ┃ ┣ 📜Banner.tsx
-  ┃ ┃ ┣ 📜MainPage.tsx
-  ┃ ┃ ┣ 📜MiniMypage.tsx
-  ┃ ┃ ┣ 📜Popular.tsx
-  ┃ ┃ ┣ 📜SearchContainer.tsx
-  ┃ ┃ ┗ 📜ThemeComponent.tsx
-  ┃ ┣ 📂play
-  ┃ ┃ ┣ 📂AudioFunctions
-  ┃ ┃ ┃ ┣ 📜ProgressBar.tsx
-  ┃ ┃ ┃ ┣ 📜SlideBtns.tsx
-  ┃ ┃ ┃ ┗ 📜VolumeInput.tsx
-  ┃ ┃ ┣ 📜Album.tsx
-  ┃ ┃ ┣ 📜DetailSong.tsx
-  ┃ ┃ ┣ 📜GetHowlAudio.tsx
-  ┃ ┃ ┗ 📜RotateImage.tsx
-  ┃ ┣ 📂playlist
-  ┃ ┃ ┗ 📜PlayList.tsx
-  ┃ ┣ 📂SiginTools
-  ┃ ┃ ┣ 📜SignBtns.tsx
-  ┃ ┃ ┗ 📜SignForm.tsx
-  ┃ ┣ 📜Footer.tsx
-  ┃ ┗ 📜Navbar.tsx
-  ┣ 📂data
-  ┃ ┗ 📜mainPageData.ts
-  ┣ 📂funcions
-  ┃ ┣ 📂autoplay
-  ┃ ┃ ┣ 📜playlistAutoPlay.ts
-  ┃ ┃ ┗ 📜useAlbumDataQuery.ts
-  ┃ ┣ 📂fetch
-  ┃ ┃ ┣ 📜checkDependency.ts
-  ┃ ┃ ┣ 📜fetchAlbums.ts
-  ┃ ┃ ┣ 📜fetchAWS.ts
-  ┃ ┃ ┣ 📜fetchImages.ts
-  ┃ ┃ ┣ 📜getDBuserdata.ts
-  ┃ ┃ ┗ 📜handleDBUpdate.ts
-  ┃ ┗ 📜checkLevenshtein.ts
-  ┣ 📂mypage
-  ┃ ┣ 📂[album]
-  ┃ ┃ ┗ 📂[title]
-  ┃ ┃   ┗ 📜page.tsx
-  ┃ ┗ 📜page.tsx
-  ┣ 📜favicon.ico
-  ┣ 📜font.css
-  ┣ 📜layout.tsx
-  ┣ 📜page.tsx
-  ┗ 📜store.ts
+  📦app
+   ┣ 📂album
+   ┃ ┗ 📂[album]
+   ┃ ┃ ┣ 📂[title]
+   ┃ ┃ ┃ ┗ 📜page.tsx
+   ┃ ┃ ┗ 📜page.tsx
+   ┣ 📂components
+   ┃ ┣ 📂heartbtn
+   ┃ ┃ ┣ 📜AlbumHeartBtn.tsx
+   ┃ ┃ ┗ 📜SongHeartBtn.tsx
+   ┃ ┣ 📂mainpage
+   ┃ ┃ ┣ 📜Arccodian.tsx
+   ┃ ┃ ┣ 📜Banner.tsx
+   ┃ ┃ ┣ 📜Chart.tsx
+   ┃ ┃ ┣ 📜MainPage.tsx
+   ┃ ┃ ┣ 📜MiniMypage.tsx
+   ┃ ┃ ┣ 📜PopularSong.tsx
+   ┃ ┃ ┣ 📜SearchContainer.tsx
+   ┃ ┃ ┣ 📜ThemeBox.tsx
+   ┃ ┃ ┗ 📜ThemeComponent.tsx
+   ┃ ┣ 📂play
+   ┃ ┃ ┣ 📂AudioFunctions
+   ┃ ┃ ┃ ┣ 📜ProgressBar.tsx
+   ┃ ┃ ┃ ┣ 📜SlideBtns.tsx
+   ┃ ┃ ┃ ┗ 📜VolumeInput.tsx
+   ┃ ┃ ┣ 📜Album.tsx
+   ┃ ┃ ┣ 📜DetailSong.tsx
+   ┃ ┃ ┣ 📜GetHowlAudio.tsx
+   ┃ ┃ ┣ 📜RotateImage.tsx
+   ┃ ┃ ┗ 📜ViewCard.tsx
+   ┃ ┣ 📂playlist
+   ┃ ┃ ┗ 📜PlayList.tsx
+   ┃ ┣ 📂SiginTools
+   ┃ ┃ ┣ 📜SignBtns.tsx
+   ┃ ┃ ┗ 📜SignForm.tsx
+   ┃ ┣ 📜Footer.tsx
+   ┃ ┣ 📜Graph.tsx
+   ┃ ┗ 📜Navbar.tsx
+   ┣ 📂data
+   ┃ ┗ 📜mainPageData.ts
+   ┣ 📂funcions
+   ┃ ┣ 📂autoplay
+   ┃ ┃ ┣ 📜playlistAutoPlay.ts
+   ┃ ┃ ┗ 📜useAlbumDataQuery.ts
+   ┃ ┣ 📂fetch
+   ┃ ┃ ┣ 📜checkDependency.ts
+   ┃ ┃ ┣ 📜fetchAlbums.ts
+   ┃ ┃ ┣ 📜fetchAWS.ts
+   ┃ ┃ ┣ 📜fetchImages.ts
+   ┃ ┃ ┣ 📜getDBuserdata.ts
+   ┃ ┃ ┣ 📜getTopTracks.ts
+   ┃ ┃ ┣ 📜handleDBUpdate.ts
+   ┃ ┃ ┗ 📜handleViews.ts
+   ┃ ┗ 📜checkLevenshtein.ts
+   ┣ 📂mypage
+   ┃ ┣ 📂[album]
+   ┃ ┃ ┗ 📂[title]
+   ┃ ┃ ┃ ┗ 📜page.tsx
+   ┃ ┗ 📜page.tsx
+   ┣ 📂providers
+   ┃ ┣ 📜ReactQueryProvider.tsx
+   ┃ ┗ 📜ReduxProvider.tsx
+   ┣ 📜favicon.ico
+   ┣ 📜font.css
+   ┣ 📜layout.tsx
+   ┣ 📜page.tsx
+   ┗ 📜store.ts
   ```
 
 * API
   ```
-  📦 pages
-  ┗ 📂api
-    ┣ 📂auth
-    ┃ ┗ 📜[...nextauth].ts
-    ┣ 📂post
-    ┃ ┣ 📜playlist.ts
-    ┃ ┗ 📜userdata.ts
-    ┣ 📂update
-    ┃ ┗ 📜updateDatabase.ts
-    ┣ 📜getAlbum.ts
-    ┣ 📜getAudio.ts
-    ┣ 📜getFolder.ts
-    ┗ 📜getImage.ts
+  📦pages
+   ┗ 📂api
+   ┃ ┣ 📂auth
+   ┃ ┃ ┗ 📜[...nextauth].ts
+   ┃ ┣ 📂get
+   ┃ ┃ ┗ 📜viewIncrease.ts
+   ┃ ┣ 📂post
+   ┃ ┃ ┣ 📜playlist.ts
+   ┃ ┃ ┗ 📜userdata.ts
+   ┃ ┣ 📂update
+   ┃ ┃ ┣ 📜updateDatabase.ts
+   ┃ ┃ ┗ 📜views.ts
+   ┃ ┣ 📜getAlbum.ts
+   ┃ ┣ 📜getAudio.ts
+   ┃ ┣ 📜getFolder.ts
+   ┃ ┗ 📜getImage.ts
   ``` 
