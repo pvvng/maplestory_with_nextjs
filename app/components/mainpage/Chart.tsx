@@ -8,13 +8,14 @@ import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-let GoBtn = styled.button`
-  transition :all 0.5s;
+let RefreshBtn = styled.button`
+  transition: all 0.5s;
+  background : none;
   border : none;
-  font-size : 14px;
+  font-size : 20px;
 
-  &:hover{
-    background :#CC0000;
+  &:hover {
+    transform: rotate(180deg);
   }
 `
 
@@ -36,9 +37,11 @@ export default function Chart (){
 
     return(
         <div className="mt-4" style={{padding:'20px', borderRadius:'20px',border:'1px solid #D2D2D2'}}>
-            <button aria-label="soft-refresh" style={{cursor:'pointer', float:'right'}} onClick={()=>{
+            <RefreshBtn aria-label="soft-refresh" style={{cursor:'pointer', float:'right'}} onClick={()=>{
                 router.refresh();
-            }}><FontAwesomeIcon icon={faArrowsRotate} /></button>
+            }}>
+                <FontAwesomeIcon icon={faArrowsRotate} />
+            </RefreshBtn>
             <p className="fw-bold m-0" style={{fontSize:'20px'}}>
                 🔥 인기 급상승&nbsp;
             </p>
