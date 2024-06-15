@@ -16,7 +16,7 @@
 <details>
   <summary>ios 환경에서 설치하기</summary>
   <div>
-    <img src='https://github.com/pvvng/pokemon_game_with_nextjs/assets/112927193/4a3d0958-72e5-48a2-ab56-52ac3f99ed0f' width='31%' />
+        <img align='top' src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/c6eb773b-3840-4dd4-aeb5-cbdff7cf2b2c' width='31%' />
         <img align='top' src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/d4bf3ead-3e08-4fa7-a86b-6b1daa34da27' width='33%'/>
         <img align='top' src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/7dba8c0f-4a9f-4b90-8c71-0a0a3950c7e2' width = '33%'/>
   </div>
