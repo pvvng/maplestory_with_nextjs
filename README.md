@@ -131,6 +131,18 @@
 
 - 검색어를 찾지 못한 경우 유사한 앨범을 추천하거나, 오늘의 추천 앨범을 보여줍니다.
 
+### 인기 급상승 노래 차트 (2024-06-15 추가)
+
+ <div align="center">
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/2b955077-fd4e-4ac5-b7d2-cb75f755d447' width='30%' />
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/de842053-b163-446d-aadf-5a75a2c4af8d' width='30%' />
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/da4b24f2-e384-4a45-8233-4f2dad1a9928' width='30%' />
+ </div>
+
+- 어제 조회수를 기준와 당일 조회수를 비교하여 얻은 조회수 등락폭을 기준으로 인기 급상승 노래 차트를 보여줍니다.
+- 조회수 등락폭은 cron-job 기능을 활용하여 24시간마다 자동으로 갱신 및 초기화됩니다.
+- 음원 재생 페이지에서 음원의 조회수 정보를 애니메이션으로 확일 할 수 있습니다. 조회수가 확인되지 않는 노래는 예외처리합니다.
+
 - - -
 
 ### 4-2. 앨범페이지
@@ -229,6 +241,9 @@
   - 비슷한 예시로 음원 재생 컴포넌트 getHowlAudio에서 오토플레이 버튼 활성화 상태에서 음원이 종료되면 다음 음원 페이지로 이동해야 했는데, 이를 상태로 관리시 상태에 값이 저장되는데 시간차가 존재해 오류가 발생했습니다. 이 경우도 useRef로 다음 재생할 음원을 관리하여 문제를 해결했습니다.
   - 결론적으론, 재렌더링에 관여하지 않고, DOM에 직접 접근 가능한 상태나 변수가 필요하다면 useRef 훅을 이용하는게 정말 좋은 선택지라는 것을 알게되는 시간이었습니다.
   - (검색 버튼과 useRef 훅)[https://velog.io/@pvvng/useRef%EB%A1%9C-input-value-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0]
+  
+- ##### 인기 급상승 노래 차트와 cron-job
+  - 인기 급상승 차트를 제작하면서 24시간마다 데이터를 갱신하는 작업에 대한 필요를 느끼게 되었습니다. 이 과정에서 cron-job을 알게되었고, 이를 사용하기로 결정했습니다. 다만, cron-job 을 사용하기 위해서는 24시간 가동되는 서버가 필요했기 때문에 우회책으로 Netlify function 과 서버리스 외부 서버리스 크론 서비스 [EasyCron](https://www.easycron.com/cron-jobs) 를 사용하여 매일 자정마다 데이터를 갱신하도록 구조화했습니다. 구체적인 코드 구현 과정이 궁금하시다면 [조회수 시스템 만들기](https://velog.io/write?id=1f97c0bc-df96-43a1-9894-1d8d9e33d923) 글을 참고하시면 됩니다.
 
 - ### 5-2. 프로젝트 중 어려웠던 부분 && 프로젝트의 아쉬운 부분
 
@@ -276,7 +291,16 @@
    - aws bucket에 prefetch와 이미지 lazy load, 이미지 형식 .webp로 변환, 적잘한 이미지 사이즈 지정 등으로 최적화를 진행하였습니다.
    - 다만, album, album 재생 페이지에서 performance 항목이 86점이 나왔기 때문에 추가적인 최적화 과정을 거칠 예정입니다.  
 
-
+- #### 2024-06-15
+1. 실시간 인기 급상승 차트 기능 추가
+   - 사용자가 어떤 노래를 듣는지 감지하고, 해당 노래를 2/3 이상 들었다면 조회수가 1 증가합니다. 어제 기준 조회수와 비교하여 조회수 증가량을 측정하여 실시간 인기 급상승 노래 차트를 제작하였습니다. 이 과정에서 DB에서 받은 조회수 데이터를 Redux Store에 보관하였으며, 아쉬운 점 중 하나였던 Redux의 활용도 문제를 작게나마 해소했습니다. 또한, 음원 재생 페이지에서 조회수 확인 애니메이션을 추가했습니다. 조회수 갱신은 netlify function 과 cron-job 기능을 활용하여 24시간마다 자동 갱신됩니다.
+  
+ <div align="center">
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/2b955077-fd4e-4ac5-b7d2-cb75f755d447' width='30%' />
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/de842053-b163-446d-aadf-5a75a2c4af8d' width='30%' />
+    <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/da4b24f2-e384-4a45-8233-4f2dad1a9928' width='30%' />
+ </div>
+  
 ## 8. file tree
 
 * page & components
