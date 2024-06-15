@@ -307,7 +307,9 @@
     <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/de842053-b163-446d-aadf-5a75a2c4af8d' width='30%' />
     <img src='https://github.com/pvvng/maplestory_with_nextjs/assets/112927193/da4b24f2-e384-4a45-8233-4f2dad1a9928' width='30%' />
  </div>
-  
+
+2. PWA maskable icon으로 변경
+   - 기존 앱 아이콘으로 rounded icon을 사용하였으나, 테두리 부분이 검게 보이는 문제가 발생하여 아이콘을 크기에 맞게 적절히 변환하도록 icon purpose를 "any maskable" 로 manefest.json 파일에 명시했습니다.
 ## 8. file tree
 
 * page & components
