@@ -1,5 +1,4 @@
 # 메이플스토리 BGM/OST 웹플레이어 - 🍁Storify🍁 README 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/24039107-9700-4bcc-ad3b-d630e2b880e0/deploy-status)](https://app.netlify.com/sites/maple-storify/deploys)
 
 ## 1. 설치 방법
 
