@@ -274,11 +274,15 @@
 제 부족함이 보이기 때문이겠죠. 
 내가 만족하는 그날까지 정진하겠습니다. 예 뭐 화이팅 ~
 
->추천 노래
->설원의 음유시인 Way Back home
->지구방위본부 진공청소기
->모험가 스토리 Go fight show your Energe
->블랙헤븐 Promise of heaven
+> ### 추천 노래
+>
+>설원의 음유시인 / Way Back home
+>
+>지구방위본부 / 진공청소기
+>
+>모험가 스토리 / Go fight show your Energe
+>
+>블랙헤븐 / Promise of heaven
 
 ## 7. 업데이트 및 변동 사항
 
