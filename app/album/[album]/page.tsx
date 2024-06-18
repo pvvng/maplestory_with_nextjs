@@ -11,8 +11,6 @@ interface PropsType {
 
 export default async function AlbumPage(props :PropsType){
 
-    console.log(props)
-
     const { session, isExist, userdata } = await getDBuserdata();
 
     // params 한글로 디코딩

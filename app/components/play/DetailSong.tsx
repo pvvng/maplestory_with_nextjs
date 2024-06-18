@@ -8,10 +8,14 @@ import { Document, WithId } from "mongodb";
 import PlayList from "../playlist/PlayList";
 import { useEffect, useState } from "react";
 import { fetchImages } from "@/app/funcions/fetch/fetchImages";
+import { useDispatch } from "react-redux";
+import { setTopTrackState } from "@/app/store";
+import ViewCard from "./ViewCard";
 
 interface PropsType {
   params : ParamsType,
   userdata :WithId<Document> | undefined,
+  topTrack : WithId<Document>[],
   // 마이페이지에서 이 컴포넌트 불러올 시 작동되는 인자
   myPageComponent ?: boolean,
   // 플레이리스트 안의 노래가 종속된 폴더
@@ -23,7 +27,14 @@ interface ParamsType {
   title :string
 }
 
-export default function DetailSong({params, userdata, myPageComponent, albumArr = []} :PropsType){
+export default function DetailSong({params, userdata, topTrack, myPageComponent, albumArr = []} :PropsType){
+
+  let dispatch = useDispatch();
+
+  // topTrack store 구독
+  useEffect(()=>{
+    dispatch(setTopTrackState(topTrack));
+  },[topTrack])
 
   // params 디코딩
   const decodedParams = {
@@ -73,6 +84,8 @@ export default function DetailSong({params, userdata, myPageComponent, albumArr 
                 <GetHowlAudio audio = {audio} album={decodedParams.album} title={title} imgUrl={imgUrl} />:
                 <GetHowlAudio audio={audio} album={decodedParams.album} title={title} albumArr={albumArr} userdata={userdata} imgUrl={imgUrl}  />
               }
+              <ViewCard decodedParams={decodedParams} />
+              
             </div>
           </div>
           <div className="col-lg-6">
@@ -81,7 +94,9 @@ export default function DetailSong({params, userdata, myPageComponent, albumArr 
               {
                 !myPageComponent?
                 <Album decodedParams = {decodedParams.album} title={title} userdata={userdata} />:
-                <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+                <div className="p-md-5">
+                  <PlayList userdata={userdata} albumArr={albumArr} decodedParams = {decodedParams}/>
+                </div>
               }
             {/* </div> */}
           </div>

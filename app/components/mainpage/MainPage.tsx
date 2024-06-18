@@ -8,19 +8,30 @@ import SearchContainer from "./SearchContainer";
 import ThemeComponet from "./ThemeComponent";
 import MiniMypage from "./MiniMypage";
 import { Document, WithId } from "mongodb";
-import axios from "axios";
 import { bannerContainer, themeAlbums, todayAlbums } from "@/app/data/mainPageData";
 import Footer from "../Footer";
 import ArccordionContainer from "./Arccodian";
+import Chart from "./Chart";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setTopTrackState } from "@/app/store";
+
 
 interface UserDataType {
   userdata : WithId<Document> | undefined,
-  albumArr : string[]
+  albumArr : string[],
+  topTrack : WithId<Document>[]
 }
 
-export default function MainPage ({userdata, albumArr} :UserDataType){
-  
+export default function MainPage ({userdata, albumArr, topTrack} :UserDataType){
+
   let router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    // 컴포넌트 topTrack이 변경될 때마다 시 인기 급상승 음악 어레이 데이터 store에 저장하기
+    dispatch(setTopTrackState(topTrack))
+  },[topTrack])
 
   // 이미지 경로 aws에서 가져오기
   const { data :image, isLoading , isError  } = useQuery( ['image'], () => fetchImages())
@@ -46,6 +57,7 @@ export default function MainPage ({userdata, albumArr} :UserDataType){
           
           {/* 테마별 앨범 */}
           <div className="col-lg-8">
+            <Chart/>
             <ThemeComponet themeAlbums={themeAlbums} image={image} />
           </div>
 

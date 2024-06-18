@@ -11,6 +11,7 @@ import { SlideAutoPlayBtn, SlidePlayBtn } from './AudioFunctions/SlideBtns';
 import VolumeInput from './AudioFunctions/VolumeInput';
 import ProgressBar from './AudioFunctions/ProgressBar';
 import { RootState } from '@/app/providers/ReduxProvider';
+import { handleViews } from '@/app/funcions/fetch/handleViews';
 
 interface AudioMetadata {
     AcceptRanges: string;
@@ -122,6 +123,7 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
         // 마운트 시 음원 재생
         setIsPlaying(true);
 
+
         // 컴포넌트 언마운트시 클리어
         return () => {
             sound.stop();
@@ -170,7 +172,19 @@ export function GetHowlAudio ({audio, album, title, albumArr, userdata, imgUrl} 
     // 0~100 까지 남은 음원 길이에 비례해서 progress bar의 width 설정
     useEffect(()=>{
         setRemainDuration(100 - ((duration/storedDuration)*100));
+
+        // 2/3 이상 음원 들었을 때, 조회수 1 증가 시키기
+        let stringifyDuration = duration.toFixed(0);
+        let stringifyStoredDuration = (storedDuration / 3).toFixed(0)
+
+        if(stringifyDuration === stringifyStoredDuration){
+            // 최초 마운트 시 상태 default 값이 0이 되어 동일해져서 조회수 증가하는걸 막기 위해
+            if(stringifyDuration !== '0' && stringifyStoredDuration !== '0'){
+                handleViews(album + '/' + title + '.mp3')
+            }
+        }
     },[duration])
+
 
     // 오토플레이 상태에 따라 슬라이드 버튼 상태 전환
     useEffect(()=>{
