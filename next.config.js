@@ -16,7 +16,6 @@ const nextConfig = {
     formats : ['image/webp'],
   },
 };
-// https://pvvng-maplemusic-storage.s3.ap-northeast-2.amazonaws.com/%EC%9D%B4%EB%AF%B8%EC%A7%80/%EC%97%94%EC%A0%A4%EB%A6%AD%EB%B2%84%EC%8A%A4%ED%84%B0.png
 
 const withPWA = require('next-pwa')({
   dest: 'public',
